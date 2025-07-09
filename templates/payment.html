@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <link rel="stylesheet" href="/static/style.css">
+
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B4N46E223S"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B4N46E223S');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Payment | FxOpus</title>
+    <!-- All necessary stylesheet links -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- The FINAL Header -->
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">FxOpus</a>
+            <button class="mobile-nav-toggle" aria-controls="nav-links" aria-expanded="false"><span class="sr-only">Menu</span></button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Services <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="forex.html">Forex Trading</a>
+                        <a href="commodities.html">Commodities</a>
+                        <a href="crypto.html">Cryptocurrency</a>
+                        <a href="loss-recovery.html">Loss Recovery Program</a>
+                        <a href="free-trial.html" class="trial-link">Free Trial</a>
+
+                    </div>
+                </li>
+                <li><a href="pricing.html">Pricing</a></li>
+                  <!-- <li><a href="blog.html">Blog</a></li> -->
+                <li><a href="index.html#contact" class="nav-contact-btn">Contact Us</a></li>
+                <li><a href="payment.html" class="nav-pay-btn">Pay Now</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="payment-page">
+            <div class="container">
+                <div class="payment-form-container">
+                    <h2 class="section-title">Secure Payment</h2>
+                    <p class="subtitle">Complete your subscription in a few easy steps.</p>
+                    
+                    <form id="secure-payment-form">
+                        <!-- Step 1: Plan and Details -->
+                        <h4 class="form-step-heading">1. Choose Your Plan & Currency</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="plan-selection">Subscription Plan</label>
+                                <select id="plan-selection" name="plan" required>
+                                    <option value="" disabled selected>Select a plan...</option>
+                                    <option value="monthly">Monthly Plan</option>
+                                    <option value="quarterly">Quarterly Plan</option>
+                                    <option value="yearly">Yearly Plan</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="currency-selection">Payment Currency</label>
+                                <select id="currency-selection" name="currency" required>
+                                    <option>USD</option><option>EUR</option><option>CHF</option><option>GBP</option><option>SGD</option><option>HKD</option><option>JPY</option><option>CNY</option><option>AED</option><option>CAD</option><option>NZD</option><option>AUD</option>
+                                </select>
+                            </div>
+                        </div>
+
+                      <h4 class="form-step-heading">2. Your Contact Details</h4>
+<!-- This new grid container will fix the alignment -->
+<div class="details-grid">
+    <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required>
+    </div>
+    <!-- The NEW WhatsApp field -->
+    <div class="form-group">
+        <label for="whatsapp">WhatsApp Number</label>
+        <input type="tel" id="whatsapp" name="whatsapp" required>
+    </div>
+</div>
+                        <!-- Step 2: Payment Method -->
+                        <h4 class="form-step-heading">3. Select Payment Method</h4>
+                        <div class="payment-method-selector">
+                            <!-- Card Payment Option -->
+                            <div class="payment-option">
+                                <input type="radio" id="pay-card" name="payment-method" value="card" checked>
+                                <label for="pay-card">
+                                    <span class="payment-option-title">Credit / Debit Card <span class="recommended-badge">Recommended</span></span>
+                                    <div class="payment-option-icons">
+                                        <i class="fab fa-cc-visa"></i>
+                                        <i class="fab fa-cc-mastercard"></i>
+                                        <i class="fab fa-cc-amex"></i>
+                                    </div>
+                                </label>
+                            </div>
+                            <!-- PayPal Payment Option -->
+                            <div class="payment-option">
+                                <input type="radio" id="pay-paypal" name="payment-method" value="paypal">
+                                <label for="pay-paypal">
+                                    <span class="payment-option-title">PayPal</span>
+                                    <div class="payment-option-icons">
+                                        <i class="fab fa-cc-paypal"></i>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Agreement and Submission -->
+                        <div class="checkbox-group legal-agreement">
+                            <input type="checkbox" id="terms-agree" name="terms-agree" required>
+                            <label for="terms-agree">I agree to the <a href="#" target="_blank">Terms of Use</a> and <a href="#" target="_blank">Privacy Policy</a>.</label>
+                        </div>
+                        
+                        <button type="submit" class="cta-button form-submit-btn">Proceed to Payment</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- The FINAL Enhanced Footer -->
+    <footer>
+        <div class="container footer-grid">
+            <div class="footer-column"><a href="index.html" class="footer-logo">FxOpus</a><p class="copyright">© 2023 FxOpus. All Rights Reserved.</p><div class="social-links"><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a><a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a></div></div>
+            <div class="footer-column"><h4>TERMS OF USE</h4><ul><li><a href="#">Security</a></li><li><a href="#">Disclaimer</a></li><li><a href="#">Disclosures</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms and Conditions</a></li></ul></div>
+            <div class="footer-column"><h4>COMPANY</h4><ul><li><a href="about.html">About Us</a></li><li><a href="loss-recovery.html">Loss Recovery Program</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="index.html#contact">Contact Us</a></li></ul></div>
+        </div>
+    </footer>
+    
+    <!-- All necessary scripts for functionality -->
+   <script>
+    // Hamburger Menu Script
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    mobileNavToggle.addEventListener('click', () => {
+        const isVisible = navLinks.getAttribute('data-visible');
+        if (isVisible === 'false' || !isVisible) {
+            navLinks.setAttribute('data-visible', true);
+            mobileNavToggle.setAttribute('aria-expanded', true);
+        } else {
+            navLinks.setAttribute('data-visible', false);
+            mobileNavToggle.setAttribute('aria-expanded', false);
+        }
+    });
+
+    // Payment Form Submission Logic
+    const paymentForm = document.getElementById('secure-payment-form');
+    if (paymentForm) {
+        paymentForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const selectedPaymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+            const plan = document.getElementById('plan-selection').value;
+
+            if (!plan) {
+                alert("Please select a plan before proceeding.");
+                return;
+            }
+
+            if (selectedPaymentMethod === 'card') {
+                alert('Simulation: Redirecting to secure card payment gateway...');
+                // window.location.href = 'https://your-card-gateway-link.com';
+            } else if (selectedPaymentMethod === 'paypal') {
+                let paypalURL = '';
+                switch (plan) {
+                    case 'monthly':
+                        paypalURL = 'https://www.paypal.com/ncp/payment/8F78ZRURWEPH2';
+                        break;
+                    case 'quarterly':
+                        paypalURL = 'https://www.paypal.com/ncp/payment/BBLLEDFT8W6M6';
+                        break;
+                    case 'yearly':
+                        paypalURL = 'https://www.paypal.com/ncp/payment/NRM9A43UDVNF6';
+                        break;
+                    default:
+                        alert("Invalid plan selection.");
+                        return;
+                }
+
+                window.location.href = paypalURL;
+            }
+        });
+    }
+</script>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/686a6ef5fd0b7e1914ecd9a0/1ivfs2sht';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+</body>
+</html>

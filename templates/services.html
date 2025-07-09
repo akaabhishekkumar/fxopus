@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <link rel="stylesheet" href="/static/style.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services | Vertex Trade Group</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ====================================================== -->
+    <!--  HEADER (Copy from index.html for consistency)       -->
+    <!-- ====================================================== -->
+ <header>
+    <nav class="container">
+        <a href="index.html" class="logo">FxOpus</a>
+        
+        <!-- ADD THIS BUTTON -->
+        <button class="mobile-nav-toggle" aria-controls="nav-links" aria-expanded="false">
+            <span class="sr-only">Menu</span>
+        </button>
+        
+        <ul class="nav-links" id="nav-links">
+            <li><a href="index.html#why-us">Why Us</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+              <li><a href="blog.html">Blog</a></li>
+            <li><a href="index.html#results">Results</a></li>
+            <li><a href="#contact" class="nav-contact-btn">Contact Us</a></li>
+        </ul>
+    </nav>
+</header>
+
+    <!-- ====================================================== -->
+    <!--  SERVICES DETAILS SECTION                              -->
+    <!-- ====================================================== -->
+    <main>
+        <section id="services-page">
+            <div class="container">
+                <div class="page-header">
+                    <h2>Our Areas of Expertise</h2>
+                    <p class="subtitle">We apply our core principles of data analysis and risk management across diverse global markets.</p>
+                </div>
+
+                <!-- Forex Details Block -->
+                <div class="service-detail-block" id="forex">
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1642790324313-a0217a1d152a?q=80&w=1974&auto=format&fit=crop" alt="Forex charts on a screen">
+                    </div>
+                    <div class="service-content">
+                        <h3>Forex Trading Strategies</h3>
+                        <p>The foreign exchange market is the largest and most liquid market in the world. Our approach focuses on identifying high-probability trends and key inflection points in major and minor currency pairs. We use a combination of technical patterns and macroeconomic analysis to inform our signals.</p>
+                        <ul>
+                            <li><strong>Focus:</strong> EUR/USD, GBP/JPY, AUD/USD, and other majors.</li>
+                            <li><strong>Methodology:</strong> Trend-following, momentum, and mean-reversion models.</li>
+                            <li><strong>Includes:</strong> Precise entry points, stop-loss, and take-profit targets.</li>
+                        </ul>
+                        <a href="pricing.html" class="cta-button">View Pricing</a>
+                    </div>
+                </div>
+
+                <!-- Commodities Details Block -->
+                <div class="service-detail-block" id="commodities">
+                     <div class="service-content">
+                        <h3>Commodities & Indices</h3>
+                        <p>Commodities like Gold and Oil offer unique diversification and hedging opportunities. Our analysis in this space is centered on supply/demand dynamics, geopolitical factors, and seasonal trends. We provide clear strategies for trading these hard assets and major global indices like the S&P 500.</p>
+                        <ul>
+                            <li><strong>Focus:</strong> Gold (XAU/USD), Crude Oil (WTI), S&P 500.</li>
+                            <li><strong>Methodology:</strong> Fundamental analysis combined with chart-based confirmation.</li>
+                            <li><strong>Includes:</strong> Long-term positional insights and short-term trading signals.</li>
+                        </ul>
+                        <a href="pricing.html" class="cta-button">View Pricing</a>
+                    </div>
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=2070&auto=format&fit=crop" alt="Global stock market data">
+                    </div>
+                </div>
+                
+                <!-- Crypto Details Block -->
+                <div class="service-detail-block" id="crypto">
+                    <div class="service-image">
+                        <img src="https://images.unsplash.com/photo-1639755243247-19541a547784?q=80&w=1939&auto=format&fit=crop" alt="Cryptocurrency coins">
+                    </div>
+                    <div class="service-content">
+                        <h3>Cryptocurrency Analysis</h3>
+                        <p>The digital asset market is known for its volatility, which presents both risk and opportunity. Our disciplined approach helps cut through the noise. We focus on major cryptocurrencies with established liquidity, using on-chain data and technical analysis to navigate this dynamic market.</p>
+                        <ul>
+                            <li><strong>Focus:</strong> Bitcoin (BTC), Ethereum (ETH).</li>
+                            <li><strong>Methodology:</strong> Volatility analysis and key support/resistance levels.</li>
+                            <li><strong>Includes:</strong> Strategies designed to manage risk in a high-volatility environment.</li>
+                        </ul>
+                        <a href="pricing.html" class="cta-button">View Pricing</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- ====================================================== -->
+    <!--  FOOTER (Copy from index.html for consistency)         -->
+    <!-- ====================================================== -->
+    <footer>
+        <div class="container">
+            <p class="copyright">© 2023 Vertex Trade Group. All Rights Reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </footer>
+   <!-- Add this just before the </body> tag in ALL THREE HTML files -->
+<script>
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    mobileNavToggle.addEventListener('click', () => {
+        const isVisible = navLinks.getAttribute('data-visible');
+
+        if (isVisible === 'false' || !isVisible) {
+            navLinks.setAttribute('data-visible', true);
+            mobileNavToggle.setAttribute('aria-expanded', true);
+        } else {
+            navLinks.setAttribute('data-visible', false);
+            mobileNavToggle.setAttribute('aria-expanded', false);
+        }
+    });
+</script>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/686a6ef5fd0b7e1914ecd9a0/1ivfs2sht';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+</body>
+</html>
