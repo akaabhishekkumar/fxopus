@@ -30,9 +30,10 @@ func main() {
 	//mc = memcache.New("127.0.0.1:11211")
 
 	router := gin.New()
+	router.Use(geoIPMiddleware)
 	router.Use(gin.Recovery())            // Keep recovery middleware
 	router.Use(gzip.Gzip(gzip.BestSpeed)) // Add gzip compression
-	router.Use(geoIPMiddleware)
+
 	// Cache headers for static files
 	router.Use(func(c *gin.Context) {
 		if c.Request.Method == http.MethodGet {
@@ -153,7 +154,7 @@ func geoIPMiddleware(c *gin.Context) {
 		// If multiple IPs (comma-separated), get the first
 		ip = strings.Split(ip, ",")[0]
 	}
-
+	log.Printf("[GeoBlock] Detected IP: %s", ip)
 	countryCode, err := getCountryCodeFromIP(ip)
 	if err != nil {
 		log.Printf("Failed to get country code from IP %s: %v", ip, err)
