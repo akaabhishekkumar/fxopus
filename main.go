@@ -96,6 +96,25 @@ func main() {
 	router.GET("/blog", func(c *gin.Context) { c.HTML(http.StatusOK, "blog.html", nil) })
 	router.GET("/blog-post", func(c *gin.Context) { c.HTML(http.StatusOK, "blog-post.html", nil) })
 
+	router.GET("/debug/ip", func(c *gin.Context) {
+		headers := make(map[string]string)
+		for k, v := range c.Request.Header {
+			headers[k] = strings.Join(v, ", ")
+		}
+
+		log.Println("=== Incoming Request Headers ===")
+		for k, v := range headers {
+			log.Printf("%s: %s\n", k, v)
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"client_ip":       c.ClientIP(),
+			"remote_addr":     c.Request.RemoteAddr,
+			"x_forwarded_for": c.GetHeader("X-Forwarded-For"),
+			"x_real_ip":       c.GetHeader("X-Real-IP"),
+			"headers":         headers,
+		})
+	})
 	// Example form submission
 	router.POST("/contact-submit", func(c *gin.Context) {
 		log.Println("Form submitted successfully.")
