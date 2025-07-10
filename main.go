@@ -10,8 +10,8 @@ import (
 	"path"
 	"path/filepath"
 	"strings"
+	"sync"
 
-	"github.com/bradfitz/gomemcache/memcache"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
 )
@@ -23,13 +23,11 @@ type FindIPResponse struct {
 	} `json:"country"`
 }
 
-var mc *memcache.Client
-
 func main() {
 	// Create a new Gin engine without default logger for performance
 
 	// Initialize memcache client
-	mc = memcache.New("127.0.0.1:11211")
+	//mc = memcache.New("127.0.0.1:11211")
 
 	router := gin.New()
 	router.Use(gin.Recovery())            // Keep recovery middleware
@@ -120,13 +118,8 @@ func getCountryCodeFromIP(ip string) (string, error) {
 	const ipAPIEndpoint = "https://api.findip.net/%s/?token=d324417b69d24048a33807051cad5814"
 
 	// Check cache
-	item, err := mc.Get(cacheKey)
-	if err == nil {
-		// Cache hit: return cached country code
-		fmt.Printf("Cache hit: Retrieved country code for IP %s from cache\n", ip)
-		return string(item.Value), nil
-	} else {
-		fmt.Printf("Cache miss: No cache data for IP %s, err: %s\n", ip, err.Error())
+	if val, ok := ipCache.Load(cacheKey); ok {
+		return val.(string), nil
 	}
 
 	// Make API request
@@ -146,18 +139,20 @@ func getCountryCodeFromIP(ip string) (string, error) {
 	countryCode := strings.ToUpper(ipData.Country.IsoCode) // Normalize to uppercase
 
 	// Store in cache
-	err = mc.Set(&memcache.Item{Key: cacheKey, Value: []byte(countryCode), Expiration: 3600}) // 1 hour
-	if err == nil {
-		fmt.Printf("Cache write: Stored country code %s for IP %s\n", countryCode, ip)
-	} else {
-		fmt.Printf("Cache write failed for IP %s: %s\n", ip, err.Error())
-	}
-
+	ipCache.Store(cacheKey, countryCode)
 	return countryCode, nil
 }
 
+var ipCache sync.Map
+
 func geoIPMiddleware(c *gin.Context) {
-	ip := c.ClientIP()
+	ip := c.GetHeader("X-Forwarded-For")
+	if ip == "" {
+		ip = c.ClientIP()
+	} else {
+		// If multiple IPs (comma-separated), get the first
+		ip = strings.Split(ip, ",")[0]
+	}
 
 	countryCode, err := getCountryCodeFromIP(ip)
 	if err != nil {
