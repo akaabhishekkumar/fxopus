@@ -30,6 +30,7 @@ func main() {
 	//mc = memcache.New("127.0.0.1:11211")
 
 	router := gin.New()
+	router.SetTrustedProxies([]string{"0.0.0.0/0"})
 	router.Use(geoIPMiddleware)
 	router.Use(gin.Recovery())            // Keep recovery middleware
 	router.Use(gzip.Gzip(gzip.BestSpeed)) // Add gzip compression
