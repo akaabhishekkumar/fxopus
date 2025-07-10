@@ -148,6 +148,13 @@ func getCountryCodeFromIP(ip string) (string, error) {
 var ipCache sync.Map
 
 func geoIPMiddleware(c *gin.Context) {
+
+	log.Printf("ClientIP: %s, RemoteAddr: %s, X-Forwarded-For: %s\n",
+		c.ClientIP(),
+		c.Request.RemoteAddr,
+		c.GetHeader("X-Forwarded-For"),
+	)
+
 	ip := c.GetHeader("X-Forwarded-For")
 	if ip == "" {
 		ip = c.ClientIP()
