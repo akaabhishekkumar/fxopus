@@ -1,14 +1,19 @@
-/* --- Global Styles & Variables --- */
+/* ==========================================================================
+   1. GLOBAL STYLES & VARIABLES
+   ========================================================================== */
+
 :root {
-    --primary-color: #0D6EFD; /* Professional, standard blue */
-    --primary-hover: #0B5ED7; /* Darker blue for hover */
-    --bg-light: #F8F9FA;      /* Light gray page background */
-    --bg-white: #FFFFFF;      /* White for cards and header */
-    --text-dark: #212529;     /* Main text color */
-    --text-muted: #6C757D;    /* Muted/secondary text */
-    --border-color: #DEE2E6;  /* Light border color */
-    --success-color: #198754; /* Green for profit */
-    --error-color: #DC3545;   /* Red for loss */
+    --primary-color: #0D6EFD;
+    --primary-hover: #0B5ED7;
+    --bg-light: #F8F9FA;
+    --bg-white: #FFFFFF;
+    --bg-light-dark: #1B233D;
+    --text-dark: #212529;
+    --text-light: #F0F8FF;
+    --text-muted: #6C757D;
+    --border-color: #DEE2E6;
+    --success-color: #198754;
+    --error-color: #DC3545;
     --font-family: 'Inter', sans-serif;
     --shadow: 0 4px 25px rgba(0, 0, 0, 0.07);
 }
@@ -30,267 +35,90 @@ body {
     line-height: 1.7;
 }
 
-/*
-======================================================
-  THE DEFINITIVE FIX FOR ALL SCROLLING CONTENT
-======================================================
-*/
-main {
-    /* KEY FIX: This creates the stacking context and ensures a solid background */
-    position: relative;
-    z-index: 0;
-    background: var(--bg-light); /* Sets the background for all scrolling content */
-
-    /* KEY FIX: This pushes content down to clear the fixed header */
-    padding-top: 90px; /* A safe value, slightly larger than the header */
-}
-
 .container {
     max-width: 1140px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
     line-height: 1.3;
     font-weight: 700;
 }
-
 h1 { font-size: 3.2rem; }
-h2 { font-size: 2.5rem; text-align: center; margin-bottom: 1rem; }
-p { font-size: 1.1rem; color: var(--text-muted); }
-.subtitle { text-align: center; max-width: 600px; margin: 0 auto 3rem auto; }
+h2 { font-size: 2.5rem; }
+h3 { font-size: 1.5rem; }
 
-/* --- Header & Navigation --- */
+p { font-size: 1.1rem; color: var(--text-muted); }
+
+.subtitle { text-align: center; max-width: 600px; margin: 0 auto 3rem auto; }
+.section-title { text-align: center; margin-bottom: 1rem; }
+section { padding: 80px 0; }
+
+/* ==========================================================================
+   2. LAYOUT: HEADER, MAIN, FOOTER
+   ========================================================================== */
+
 header {
-      position: fixed;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     background: var(--bg-white);
     border-bottom: 1px solid var(--border-color);
     padding: 1rem 0;
-    position: fixed;
-    width: 100%;
     z-index: 1000;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
+main {
+    position: relative;
+    z-index: 0;
+    background: var(--bg-light);
+    padding-top: 90px;
+}
+
+footer {
+    background: var(--bg-white);
+    border-top: 1px solid var(--border-color);
+    padding: 60px 0;
+    font-size: 0.95rem;
+}
+
+/* ==========================================================================
+   3. COMPONENTS: Navigation, Buttons, Cards, Forms, etc.
+   ========================================================================== */
+
+/* --- Navigation --- */
 header nav { display: flex; justify-content: space-between; align-items: center; }
 .logo { font-size: 1.5rem; font-weight: 700; color: var(--text-dark); text-decoration: none; }
 .nav-links { list-style: none; display: flex; align-items: center; gap: 2rem; }
 .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 500; transition: color 0.3s ease; }
 .nav-links a:hover { color: var(--primary-color); }
 
-.nav-contact-btn {
-    background: var(--primary-color);
-    color: var(--bg-white) !important;; /* Explicitly set text color to white */
-    padding: 0.6rem 1.5rem;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
-}
-.nav-contact-btn:hover {
-    background-color: var(--primary-hover);
-    color: var(--bg-white) !important;; /* Ensure text stays white on hover */
-}
-/* --- New "Pay Now" Button Styling --- */
-.nav-pay-btn {
-    background: linear-gradient(45deg, #28a745, #218838); /* A rich green gradient */
-    color: var(--bg-white) !important;
-    padding: 0.6rem 1.5rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
-}
-.nav-pay-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
-}
-
-/* --- Hero Section --- */
-/* --- NEW Hero Section CSS --- */
-
-#hero {
+/* --- Dropdown Menu --- */
+.dropdown { position: relative; }
+.dropdown-toggle { padding: 1.5rem 0; }
+.dropdown-toggle i { font-size: 0.7rem; margin-left: 0.25rem; transition: transform 0.3s ease; }
+.dropdown-content {
+    visibility: hidden; opacity: 0; pointer-events: none;
+    position: absolute; top: 90%; left: 50%;
+    transform: translateX(-50%) translateY(10px);
     background-color: var(--bg-white);
-    padding-top: 120px; /* Adjusted padding */
-    padding-bottom: 120px;
-    overflow: hidden; /* Important for animations */
-}
-
-.hero-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 3rem;
-}
-
-/* Left Column: Text */
-.hero-text h1 {
-    line-height: 1.2;
-}
-.hero-text p {
-    margin: 1.5rem 0 2.5rem 0;
-}
-
-.hero-cta-group {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.secondary-cta {
-    font-weight: 600;
-    color: var(--primary-color);
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-.secondary-cta:hover {
-    color: var(--primary-hover);
-}
-.secondary-cta i {
-    margin-left: 0.25rem;
-    transition: transform 0.3s ease;
-}
-.secondary-cta:hover i {
-    transform: translateX(4px);
-}
-
-.hero-trust-badge {
-    margin-top: 3rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.avatars {
-    display: flex;
-}
-.avatars img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 3px solid var(--bg-white);
-    margin-left: -15px;
-}
-.avatars img:first-child {
-    margin-left: 0;
-}
-.hero-trust-badge span {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-}
-
-/* Right Column: Visual */
-.visual-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-}
-.visual-card {
-    background: var(--bg-white);
-    border-radius: 12px;
-    padding: 1.25rem;
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
-    opacity: 0; /* Start hidden for the animation */
-    animation: card-load-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-}
-
-/* Add staggered animation delays for the cool loading effect */
-.visual-card:nth-child(1) { animation-delay: 0.1s; }
-.visual-card:nth-child(2) { animation-delay: 0.2s; }
-.visual-card:nth-child(3) { animation-delay: 0.3s; }
-.visual-card:nth-child(4) { animation-delay: 0.4s; }
-.visual-card:nth-child(5) { animation-delay: 0.5s; }
-.visual-card:nth-child(6) { animation-delay: 0.6s; }
-
-
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.75rem;
-}
-.card-header h4 { font-weight: 600; font-size: 1rem; }
-
-/* Replace the old .live-badge with these more specific badges */
-.live-badge {
-    padding: 0.2rem 0.5rem;
-    border-radius: 50px;
-    font-size: 0.75rem;
-    font-weight: 700;
-}
-.live-badge.buy { background-color: rgba(25, 135, 84, 0.1); color: var(--success-color); }
-.live-badge.sell { background-color: rgba(220, 53, 69, 0.1); color: var(--error-color); }
-.live-badge.neutral { background-color: rgba(108, 117, 125, 0.1); color: var(--text-muted); }
-
-.card-stats label {
-    display: block;
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    margin-bottom: 0.1rem;
-}
-.card-stats span {
-    font-weight: 600;
-    font-size: 0.9rem;
-}
-
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-.card-header h4 {
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-.card-header i { color: var(--primary-color); }
-.live-badge {
-    background-color: rgba(220, 53, 69, 0.1);
-    color: var(--error-color);
-    padding: 0.25rem 0.6rem;
-    border-radius: 50px;
-    font-size: 0.8rem;
-    font-weight: 700;
-}
-
-.card-chart { margin-bottom: 1.5rem; }
-
-.card-stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-}
-.stat-item {
-    background: var(--bg-light);
-    padding: 1rem;
+    min-width: 240px;
+    box-shadow: var(--shadow);
+    z-index: 100;
     border-radius: 8px;
+    padding: 0.5rem 0;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
 }
-.stat-item label {
-    display: block;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-bottom: 0.25rem;
-}
-.stat-item span {
-    font-weight: 700;
-    font-size: 1rem;
-}
-.strong-buy { color: var(--success-color); }
+.dropdown:hover .dropdown-content { visibility: visible; opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+.dropdown:hover .dropdown-toggle i { transform: rotate(180deg); }
+.dropdown-content a { color: var(--text-dark); padding: 0.75rem 1.5rem; display: block; font-weight: 500; }
+.dropdown-content a:hover { background-color: var(--bg-light); color: var(--primary-color); }
+.trial-link { color: var(--primary-color) !important; font-weight: 700 !important; }
 
-/* Animation Keyframes */
-@keyframes card-load-in {
-    from {
-        opacity: 0;
-        transform: translateY(20px) scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-.hero-content h1 { max-width: 800px; margin: 0 auto 1.5rem auto; }
-.hero-content p { max-width: 650px; margin: 0 auto 2.5rem auto; }
-
+/* --- Buttons --- */
 .cta-button {
     display: inline-block;
     background: var(--primary-color);
@@ -303,316 +131,33 @@ header nav { display: flex; justify-content: space-between; align-items: center;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 .cta-button:hover { background-color: var(--primary-hover); transform: translateY(-3px); }
-
-/* --- General Section Styling --- */
-section {
-    padding: 80px 0;
+.nav-links .nav-contact-btn {
+    background: var(--primary-color);
+    color: var(--bg-white) !important;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
 }
-
-/* --- Why Us & Services Grids --- */
-.features-grid, .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+.nav-links .nav-contact-btn:hover { background-color: var(--primary-hover); }
+.nav-links .nav-pay-btn {
+    background: linear-gradient(45deg, #28a745, #218838);
+    color: var(--bg-white) !important;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
 }
+.nav-links .nav-pay-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4); }
 
-.feature-card, .service-card {
-    background: var(--bg-white);
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: var(--shadow);
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.feature-card:hover, .service-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-}
-
-.feature-card i, .service-card i {
-    font-size: 2.5rem;
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
-    background: linear-gradient(135deg, rgba(13, 110, 253, 0.1), rgba(13, 110, 253, 0));
-    width: 80px;
-    height: 80px;
-    line-height: 80px;
-    border-radius: 50%;
-}
-/* In your style.css file */
-
-.service-card {
-    background: var(--bg-white);
-    padding: 70px 2.5rem 2.5rem; /* Change padding: top is now 70px */
-    border-radius: 12px;
-    box-shadow: var(--shadow);
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative; /* ADD THIS: Makes it the positioning anchor */
-    display: flex;
-    flex-direction: column;
-}
-
-.service-card i {
-    /* These are the new positioning rules */
-    position: absolute;
-    top: -40px; /* Pulls the icon up */
-    left: 50%;  /* Moves it to the middle */
-    transform: translateX(-50%); /* Centers it perfectly */
-    
-    /* These are the existing styles, which still work great */
-    font-size: 2.5rem;
-    color: var(--primary-color);
-    background: var(--bg-white); /* Use white for a clean look */
-    width: 80px;
-    height: 80px;
-    line-height: 80px;
-    border-radius: 50%;
-    box-shadow: 0 4px 15px rgba(13, 110, 253, 0.25); /* Add shadow to the icon */
-}
-.details-link {
-    margin-top: 1.5rem;
-    text-decoration: none;
-    color: var(--primary-color);
-    font-weight: 600;
-    transition: color 0.3s ease;
-}
-.details-link:hover { color: var(--primary-hover); }
-.details-link::after { content: ' →'; transition: transform 0.3s ease; display: inline-block; }
-.details-link:hover::after { transform: translateX(4px); }
-
-/* --- Services Section --- */
-#services { background-color: var(--bg-white); }
-
-/* --- Results Section --- */
-.results-table-container {
-    background: var(--bg-white);
-    border-radius: 12px;
-    box-shadow: var(--shadow);
-    
-    /* KEY FIX: Allows horizontal scrolling on overflow */
-    overflow-x: auto; 
-    
-    /* For smoother scrolling on touch devices */
-    -webkit-overflow-scrolling: touch;
-}
-table {
-    width: 100%;
-    border-collapse: collapse;
-    
-    /* KEY FIX: Prevents the table from squishing too much. */
-    /* The scroll will start when the screen is narrower than this. */
-    min-width: 600px; 
-}
-th, td {
-    padding: 1.25rem 1.5rem; /* Adds a bit more side padding */
-    text-align: left;
-    border-bottom: 1px solid var(--border-color);
-    
-    /* KEY FIX: Prevents text from wrapping to a new line */
-    white-space: nowrap; 
-}
-tbody tr:last-child td { border-bottom: none; }
-thead { border-bottom: 2px solid var(--border-color); }
-th { color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.85rem; }
-td { font-weight: 500; }
-
-.profit { color: var(--success-color); }
-.loss { color: var(--error-color); }
-
-.disclaimer { font-size: 0.9rem; text-align: center; max-width: 800px; margin: 2rem auto 0 auto; }
-/*
-======================================================
-  NEW PAYMENT METHODS SECTION STYLES
-======================================================
-*/
-#payment-methods {
-    padding: 50px 0;
-    border-top: 1px solid var(--border-color);
-}
-
-.payment-wrapper {
-    text-align: center;
-}
-
-.section-label {
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    color: var(--text-muted);
-    margin-bottom: 1.5rem;
-}
-
-.payment-logos {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 3rem;
-}
-/* --- Enhanced Payment Logos Styling --- */
-.payment-logos i {
-    font-size: 3rem;
-    color: #a0aec0;
-    transition: color 0.3s ease, transform 0.3s ease;
-    cursor: pointer;
-    vertical-align: middle; /* ADD THIS: Helps align font icons consistently */
-}
-
-/* --- Specific Hover Colors for Each Brand (Refined) --- */
-
-.payment-logos .fa-cc-visa:hover {
-    color: #1A56CE; /* Correct Visa Blue */
-    transform: scale(1.1);
-}
-
-/* --- Styling for the Custom Mastercard SVG Logo --- */
-
-/*
-======================================================
-  FINAL & DEFINITIVE PAYMENT SECTION STYLES
-======================================================
-*/
-
-/* --- The Main Logo Container --- */
-.payment-logos {
-    display: flex;
-    justify-content: center;
-    gap: 2.5rem;
-    
-    /* KEY STRATEGY: Align all items to their vertical center. */
-    align-items: center; 
-}
-
-/* --- General Styling for Font Awesome Icons --- */
-.payment-logos i {
-    font-size: 3rem;
-    color: #a0aec0; /* Neutral, muted gray */
-    transition: color 0.3s ease, transform 0.3s ease;
-    cursor: pointer;
-}
-
-/* --- Styling for the Custom Mastercard SVG Logo --- */
-.payment-logo.mastercard-logo {
-    width: 80px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    
-    /* THE DEFINITIVE FIX: Nudge the taller element down into alignment. */
-    position: relative;
-    top: 10px; /* This small push aligns it perfectly with the other icons' centers. */
-}
-
-.mastercard-svg {
-    width: 100%;
-    height: auto;
-    overflow: visible;
-}
-
-/* --- Default Colors for the SVG parts --- */
-.mastercard-svg .mc-circle-red,
-.mastercard-svg .mc-circle-yellow,
-.mastercard-svg .mc-text {
-    fill: #a0aec0; /* Correct default muted gray */
-    transition: fill 0.3s ease;
-}
-
-.mc-text {
-    font-size: 14px;
-    font-family: var(--font-family);
-    font-weight: 500;
-}
-
-
-/* --- HOVER EFFECTS (Now with unified transform) --- */
-
-/* Generic hover transform for all icons */
-.payment-logos i:hover,
-.payment-logo.mastercard-logo:hover {
-    transform: translateY(-5px) scale(1.05);
-}
-
-/* Specific hover colors */
-.payment-logos .fa-cc-visa:hover { color: #1A56CE; }
-.payment-logos .fa-cc-paypal:hover { color: #003087; }
-.payment-logos .fa-bitcoin:hover { color: #F7931A; }
-
-.mastercard-logo:hover .mc-circle-red { fill: #EB001B; }
-.mastercard-logo:hover .mc-circle-yellow { fill: #F79E1B; fill-opacity: 0.85; }
-.mastercard-logo:hover .mc-text { fill: #2c2c2c; }
-
-
-.payment-logos .fa-cc-paypal:hover {
-    color: #003087; /* Official PayPal Dark Blue */
-    transform: scale(1.1);
-}
-
-.payment-logos .fa-bitcoin:hover {
-    color: #F7931A; /* Correct Bitcoin Orange */
-    transform: scale(1.1);
-}
-/* --- Final CTA Section --- */
-/* --- Final CTA & Contact Section --- */
-/* This section replaces the old .final-cta styling */
-
-#contact {
-    background: var(--bg-white);
-    padding: 100px 0;
-}
-
-.contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr; /* Makes the form column wider */
-    gap: 4rem;
-    margin-top: 4rem;
-    align-items: start;
-}
-
-/* Left Column: Info styling */
-.contact-info h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: var(--text-dark);
-}
-
-.contact-info p {
-    margin-bottom: 2rem;
-}
-
-.contact-info ul {
-    list-style: none;
-    padding: 0;
-}
-
-.contact-info li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    color: var(--text-muted);
-}
-
-.contact-info i {
-    font-size: 1.2rem;
-    color: var(--primary-color);
-    width: 40px; /* Aligns text neatly */
-}
-
-/* Right Column: Form styling */
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.contact-form label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: var(--text-dark);
-}
-
-.contact-form input,
-.contact-form select,
-.contact-form textarea {
+/* --- Global Form Styles --- */
+.form-group { margin-bottom: 1.5rem; }
+.form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem; color: var(--text-dark); }
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea {
     width: 100%;
     padding: 0.9rem 1rem;
     border: 1px solid var(--border-color);
@@ -622,84 +167,323 @@ td { font-weight: 500; }
     background-color: var(--bg-light);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
-
-.contact-form input:focus,
-.contact-form select:focus,
-.contact-form textarea:focus {
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2); /* Professional focus glow */
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2);
 }
 
-/* Styling for the select dropdown arrow */
-.contact-form select {
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    background-size: 16px 12px;
-}
-
-.form-submit-btn {
-    width: 100%;
-    padding-top: 1.1rem;
-    padding-bottom: 1.1rem;
-    border: none;
-    cursor: pointer;
-}
-
-/*
-======================================================
-  SUCCESS MESSAGE MODAL STYLES
-======================================================
-*/
+/* --- Modal --- */
 .success-modal-overlay {
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background: rgba(18, 24, 40, 0.6);
     backdrop-filter: blur(5px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: flex; justify-content: center; align-items: center;
     z-index: 2000;
-    
-    /* Animation settings */
-    opacity: 1;
-    visibility: visible;
+    opacity: 1; visibility: visible;
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
-
-/* This is the class that hides the modal */
-.success-modal-overlay.hidden {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none; /* Can't be clicked when hidden */
-}
-
+.success-modal-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 .success-modal {
     background: var(--bg-white);
     padding: 2.5rem 3rem;
     border-radius: 16px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    max-width: 450px;
-    
-    /* Animation for the card itself */
-    transform: scale(1);
-    transition: transform 0.3s ease;
+    text-align: center; max-width: 450px;
+    transform: scale(1); transition: transform 0.3s ease;
 }
-
-/* When the overlay is hidden, the card shrinks slightly */
-.success-modal-overlay.hidden .success-modal {
-    transform: scale(0.95);
-}
-
+.success-modal-overlay.hidden .success-modal { transform: scale(0.95); }
 .modal-icon { font-size: 4rem; color: var(--success-color); margin-bottom: 1.5rem; }
 .modal-title { font-size: 1.75rem; color: var(--text-dark); margin-bottom: 0.75rem; }
 .modal-message { color: var(--text-muted); line-height: 1.6; margin-bottom: 2rem; }
 .modal-close-btn { width: 100%; }
 
-/* --- Footer --- */
+/* ==========================================================================
+   4. PAGE-SPECIFIC SECTIONS
+   ========================================================================== */
+
+/* --- Homepage: Hero Section --- */
+#hero { background-color: var(--bg-white); overflow: hidden; }
+.hero-content { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 3rem; }
+.hero-text h1 { line-height: 1.2; }
+.hero-text p { margin: 1.5rem 0 2.5rem 0; }
+.hero-cta-group { display: flex; align-items: center; gap: 1.5rem; }
+.secondary-cta { font-weight: 600; color: var(--primary-color); text-decoration: none; transition: color 0.3s ease; }
+.secondary-cta:hover { color: var(--primary-hover); }
+.secondary-cta i { margin-left: 0.25rem; transition: transform 0.3s ease; }
+.secondary-cta:hover i { transform: translateX(4px); }
+.hero-trust-badge { margin-top: 3rem; display: flex; align-items: center; gap: 1rem; }
+.avatars { display: flex; }
+.avatars img { width: 40px; height: 40px; border-radius: 50%; border: 3px solid var(--bg-white); margin-left: -15px; }
+.avatars img:first-child { margin-left: 0; }
+.hero-trust-badge span { font-size: 0.9rem; color: var(--text-muted); }
+.visual-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+.visual-card { background: var(--bg-white); border-radius: 12px; padding: 1.25rem; box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08); opacity: 0; animation: card-load-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+.visual-card:nth-child(1) { animation-delay: 0.1s; } .visual-card:nth-child(2) { animation-delay: 0.2s; } .visual-card:nth-child(3) { animation-delay: 0.3s; }
+.visual-card:nth-child(4) { animation-delay: 0.4s; } .visual-card:nth-child(5) { animation-delay: 0.5s; } .visual-card:nth-child(6) { animation-delay: 0.6s; }
+.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+.card-header h4 { font-weight: 600; font-size: 1rem; }
+.live-badge { padding: 0.2rem 0.5rem; border-radius: 50px; font-size: 0.75rem; font-weight: 700; }
+.live-badge.buy { background-color: rgba(25, 135, 84, 0.1); color: var(--success-color); }
+.live-badge.sell { background-color: rgba(220, 53, 69, 0.1); color: var(--error-color); }
+.live-badge.neutral { background-color: rgba(108, 117, 125, 0.1); color: var(--text-muted); }
+.card-stats label { display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.1rem; }
+.card-stats span { font-weight: 600; font-size: 0.9rem; }
+@keyframes card-load-in { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+/* --- Homepage: Features & Services Grids --- */
+#services { background-color: var(--bg-white); }
+.features-grid, .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+.feature-card { background: var(--bg-white); padding: 2.5rem; border-radius: 12px; box-shadow: var(--shadow); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.feature-card i { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1.5rem; }
+.feature-card:hover { transform: translateY(-8px); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); }
+.service-card { background: var(--bg-white); padding: 70px 2.5rem 2.5rem; border-radius: 12px; box-shadow: var(--shadow); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; display: flex; flex-direction: column; }
+.service-card:hover { transform: translateY(-8px); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); }
+.service-card i { position: absolute; top: -40px; left: 50%; transform: translateX(-50%); font-size: 2.5rem; color: var(--primary-color); background: var(--bg-white); width: 80px; height: 80px; line-height: 80px; border-radius: 50%; box-shadow: 0 4px 15px rgba(13, 110, 253, 0.25); }
+.service-card p { flex-grow: 1; }
+.details-link { margin-top: 1.5rem; text-decoration: none; color: var(--primary-color); font-weight: 600; transition: color 0.3s ease; }
+.details-link:hover { color: var(--primary-hover); }
+.details-link::after { content: ' →'; transition: transform 0.3s ease; display: inline-block; }
+.details-link:hover::after { transform: translateX(4px); }
+
+/* --- Homepage: Results Table --- */
+.results-table-container { background: var(--bg-white); border-radius: 12px; box-shadow: var(--shadow); overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table { width: 100%; border-collapse: collapse; min-width: 600px; }
+th, td { padding: 1.25rem 1.5rem; text-align: left; border-bottom: 1px solid var(--border-color); white-space: nowrap; }
+tbody tr:last-child td { border-bottom: none; }
+thead { border-bottom: 2px solid var(--border-color); }
+th { color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.85rem; }
+.profit { color: var(--success-color); } .loss { color: var(--error-color); }
+.disclaimer { font-size: 0.9rem; text-align: center; max-width: 800px; margin: 2rem auto 0 auto; }
+
+/* --- Homepage: Testimonials & Stats --- */
+.bg-light-section { background-color: var(--bg-light); }
+#testimonials { padding: 100px 0; background: var(--bg-white); }
+.testimonial-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 4rem; }
+.testimonial-card { background: var(--bg-light); border: 1px solid var(--border-color); padding: 2.5rem; border-radius: 16px; position: relative; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03); }
+.quote-icon { position: absolute; top: 1.5rem; left: 1.5rem; font-size: 3rem; color: var(--primary-color); opacity: 0.1; }
+.testimonial-card blockquote { font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem; position: relative; z-index: 2; }
+.author-info { display: flex; align-items: center; gap: 1rem; }
+.author-avatar { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--border-color); }
+.author-name { font-weight: 600; color: var(--text-dark); font-style: normal; }
+.author-location { font-size: 0.9rem; color: var(--text-muted); }
+#stats { padding: 80px 0; }
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+.stat-item { text-align: center; }
+.stat-item i { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem; }
+.stat-number, .stat-number-text { display: block; font-size: 3rem; font-weight: 700; color: var(--text-dark); line-height: 1.1; }
+.stat-label { font-size: 1rem; color: var(--text-muted); }
+
+/* --- Homepage: Payment Methods --- */
+#payment-methods { padding: 50px 0; border-top: 1px solid var(--border-color); }
+.payment-wrapper { text-align: center; }
+.section-label { text-transform: uppercase; font-size: 0.9rem; font-weight: 600; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 1.5rem; }
+.payment-logos { display: flex; justify-content: center; align-items: center; gap: 2.5rem; }
+.payment-logos i { font-size: 3rem; color: #a0aec0; transition: color 0.3s ease, transform 0.3s ease; cursor: pointer; vertical-align: middle; }
+.payment-logo.mastercard-logo { width: 80px; cursor: pointer; transition: transform 0.3s ease; position: relative; top: 10px; }
+.mastercard-svg { width: 100%; height: auto; overflow: visible; }
+.mastercard-svg .mc-circle-red, .mastercard-svg .mc-circle-yellow, .mastercard-svg .mc-text { fill: #a0aec0; transition: fill 0.3s ease; }
+.mc-text { font-size: 14px; font-family: var(--font-family); font-weight: 500; }
+.payment-logos i:hover, .payment-logo.mastercard-logo:hover { transform: translateY(-5px) scale(1.05); }
+.payment-logos .fa-cc-visa:hover { color: #1A56CE; }
+.payment-logos .fa-cc-paypal:hover { color: #003087; }
+.payment-logos .fa-bitcoin:hover { color: #F7931A; }
+.mastercard-logo:hover .mc-circle-red { fill: #EB001B; }
+.mastercard-logo:hover .mc-circle-yellow { fill: #F79E1B; fill-opacity: 0.85; }
+.mastercard-logo:hover .mc-text { fill: #2c2c2c; }
+
+/* --- Homepage: Contact Section --- */
+#contact { padding: 100px 0; background: var(--bg-white); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; align-items: start; }
+.contact-info h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+.contact-info p { margin-bottom: 2rem; }
+.contact-info ul { list-style: none; padding: 0; }
+.contact-info li { display: flex; align-items: center; margin-bottom: 1.5rem; color: var(--text-muted); }
+.contact-info i { font-size: 1.2rem; color: var(--primary-color); width: 40px; }
+.choices__item--choice .flag-icon { display: inline-block; width: 20px; margin-right: 10px; vertical-align: middle; }
+.choices__item--choice span { vertical-align: middle; }
+.form-submit-btn { width: 100%; padding: 1.1rem 0; border: none; cursor: pointer; }
+
+/* --- About Us Page --- */
+#about-intro { padding: 120px 0; }
+.about-text-block { max-width: 850px; margin: 0 auto; text-align: center; }
+.about-text-block h1 { margin-bottom: 2rem; }
+.about-text-block p { font-size: 1.15rem; line-height: 1.8; }
+.about-text-block p strong { color: var(--text-dark); }
+#about-mission { background-color: var(--bg-light-dark); color: var(--text-light); padding: 80px 0; text-align: center; }
+#about-mission h2 { font-size: 2rem; max-width: 700px; margin: 2rem auto; line-height: 1.5; }
+#about-mission p { color: var(--text-muted); font-size: 1.1rem; max-width: 900px; margin: 2rem auto; }
+#why-choose-us { padding: 100px 0; }
+.why-us-list { max-width: 900px; margin: 0 auto; }
+#about-cta { background: var(--primary-color); padding: 80px 0; text-align: center; }
+#about-cta h2, #about-cta p { color: #fff; }
+#about-cta p { color: rgba(255, 255, 255, 0.9); margin: 1rem auto 2rem auto; max-width: 600px; }
+#about-cta .cta-button { background: #fff; color: var(--primary-color); }
+#about-cta .cta-button:hover { background: var(--bg-dark); color: #fff; }
+
+/* --- Generic Inner Page Hero --- */
+.page-header { text-align: center; padding: 120px 0 60px 0; }
+.service-hero { padding: 120px 0; text-align: center; background-size: cover; background-position: center; color: var(--text-dark); }
+.service-hero h1 { font-size: 3.5rem; }
+.service-hero .subtitle { font-size: 1.25rem; max-width: 700px; }
+
+/* --- Service Detail Pages --- */
+.service-page-content { background: var(--bg-white); }
+.service-detail-block { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; padding: 60px 0; border-bottom: 1px solid var(--border-color); }
+.service-detail-block:last-child { border-bottom: none; }
+.service-detail-block:nth-child(even) .service-image { order: 2; }
+.service-image img { width: 100%; border-radius: 16px; box-shadow: var(--shadow); }
+.service-content h3 { font-size: 2rem; margin-bottom: 1rem; }
+.service-content ul { list-style: none; padding-left: 0; margin-bottom: 2rem; }
+.service-content li { margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative; }
+.service-content li::before { content: '✓'; position: absolute; left: 0; color: var(--primary-color); font-weight: 700; }
+
+/* --- Pricing Page --- */
+#pricing-page { padding-bottom: 100px; }
+#service-pricing { padding: 100px 0; }
+.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; align-items: center; }
+.pricing-card { background: var(--bg-white); border-radius: 16px; padding: 2.5rem; border: 2px solid var(--border-color); transition: all 0.3s ease; position: relative; text-align: center; }
+.pricing-card.highlighted { border-color: var(--primary-color); transform: scale(1.05); box-shadow: 0 10px 40px rgba(13, 110, 253, 0.15); }
+.badge { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: var(--primary-color); color: var(--bg-white); padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.8rem; font-weight: 700; }
+.plan-name { font-size: 1.5rem; margin-bottom: 1rem; }
+.price-tag { margin-bottom: 1rem; }
+.currency { font-size: 1.5rem; color: var(--text-muted); vertical-align: top; margin-right: 0.25rem; }
+.price-amount { font-size: 3.5rem; font-weight: 700; line-height: 1; }
+.price-cycle { font-size: 1rem; color: var(--text-muted); }
+.plan-description { font-size: 0.9rem; margin-bottom: 2rem; min-height: 50px; }
+.features-list { list-style: none; text-align: left; margin-bottom: 2.5rem; }
+.features-list li { margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
+.features-list i { color: var(--success-color); font-size: 1.2rem; }
+.pricing-card .cta-button.secondary { background: var(--bg-white); color: var(--primary-color); border: 2px solid var(--primary-color); }
+.pricing-card .cta-button.secondary:hover { background: var(--primary-color); color: var(--bg-white); }
+
+/* --- Loss Recovery Page --- */
+#recovery-quote { padding: 100px 0; }
+.quote-block { max-width: 800px; margin: 0 auto; position: relative; padding: 2rem 2rem 2rem 3rem; border-left: 5px solid var(--primary-color); }
+.quote-block::before { content: '\f10d'; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; top: 0; left: 1rem; font-size: 5rem; color: var(--primary-color); opacity: 0.08; z-index: 1; }
+.quote-block p { position: relative; z-index: 2; font-size: 1.25rem; line-height: 1.8; color: var(--text-dark); font-weight: 500; margin-bottom: 2rem; }
+.quote-block .quote-saying { font-style: italic; color: var(--text-muted); }
+.quote-block p:last-child { font-weight: 600; margin-bottom: 0; }
+#recovery-program { background-color: var(--bg-light-dark); color: var(--text-light); padding: 80px 0; text-align: center; }
+#recovery-program p { color: var(--text-muted); font-size: 1.1rem; max-width: 900px; margin: 2rem auto; }
+.separator-line { width: 100px; height: 2px; background-color: var(--primary-color); border: none; margin: 0 auto; }
+#recovery-details { padding: 100px 0; text-align: center; }
+#recovery-details h3 { font-size: 1.5rem; margin-bottom: 3rem; }
+.details-list { display: flex; flex-direction: column; gap: 1.5rem; max-width: 800px; margin: 0 auto; text-align: left; }
+.detail-item { display: flex; align-items: center; gap: 1.5rem; }
+.detail-number { flex-shrink: 0; width: 40px; height: 40px; line-height: 40px; text-align: center; border-radius: 50%; background-color: var(--primary-color); color: var(--bg-white); font-weight: 700; }
+.detail-item p { font-size: 1.1rem; font-weight: 500; color: var(--text-dark); }
+#recovery-form { padding: 100px 0; }
+.form-container-card { max-width: 650px; margin: 0 auto; background: var(--bg-white); padding: 3rem; border-radius: 16px; box-shadow: var(--shadow); text-align: center; }
+.recovery-specific-form { margin-top: 2rem; }
+.input-with-icon { position: relative; margin-bottom: 1.5rem; }
+.input-with-icon i { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+.input-with-icon input { padding-left: 2.5rem; }
+.checkbox-group { display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 2rem; }
+.checkbox-group input[type="checkbox"] { display: none; }
+.checkbox-group label { cursor: pointer; position: relative; padding-left: 30px; font-weight: 500; color: var(--text-dark); }
+.checkbox-group label::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; border: 2px solid var(--border-color); border-radius: 4px; background: var(--bg-light); transition: all 0.2s ease; }
+.checkbox-group input[type="checkbox"]:checked + label::before { background-color: var(--primary-color); border-color: var(--primary-color); }
+.checkbox-group label::after { content: '✓'; position: absolute; left: 4px; top: 50%; transform: translateY(-50%) scale(0); color: var(--bg-white); font-weight: 700; transition: transform 0.2s ease; }
+.checkbox-group input[type="checkbox"]:checked + label::after { transform: translateY(-50%) scale(1); }
+
+/* --- Free Trial Page --- */
+#trial-hero { padding: 100px 0; text-align: center; }
+#trial-hero .quote-block { max-width: 750px; border: none; padding: 0; }
+#trial-hero .quote-block::before { display: none; }
+#trial-hero h1 { font-size: 3rem; margin-bottom: 1.5rem; }
+#trial-hero p { font-size: 1.2rem; }
+#trial-details { padding: 100px 0; background-color: var(--bg-white); }
+.trial-offering-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 800px; margin: 3rem auto 0 auto; }
+.trial-offering-card { border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; text-align: center; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.trial-offering-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+.trial-offering-card i { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1.5rem; }
+.trial-offering-card h3 { margin-bottom: 0.5rem; }
+.trial-offering-card .signal-count { font-size: 1.1rem; font-weight: 600; color: var(--text-muted); }
+#trial-benefits { padding: 100px 0; }
+.benefits-content { max-width: 800px; margin: 0 auto; }
+.benefits-content h3 { font-size: 2rem; text-align: center; margin-bottom: 2rem; }
+.benefits-content p { font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem; }
+.benefits-content strong { color: var(--text-dark); }
+#trial-cta { background: var(--primary-color); padding: 80px 0; text-align: center; }
+#trial-cta h2, #trial-cta p { color: #fff; }
+#trial-cta p { color: rgba(255, 255, 255, 0.9); margin: 1rem auto 2rem auto; max-width: 600px; }
+#trial-cta .cta-button { background: #fff; color: var(--primary-color); }
+#trial-cta .cta-button:hover { background: var(--bg-dark); color: #fff; }
+
+/* --- Blog Pages --- */
+#blog-grid-section { padding-bottom: 100px; position: relative; z-index: 1; }
+.blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2.5rem; }
+.blog-card { display: flex; flex-direction: column; background: var(--bg-white); border-radius: 12px; box-shadow: var(--shadow); overflow: hidden; text-decoration: none; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.blog-card:hover { transform: translateY(-8px); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); }
+.blog-card-image { width: 100%; height: 220px; object-fit: cover; }
+.blog-card-content { padding: 1.5rem; }
+.blog-card-category { display: inline-block; background-color: rgba(13, 110, 253, 0.1); color: var(--primary-color); padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
+.blog-card-title { font-size: 1.25rem; color: var(--text-dark); margin-bottom: 0.75rem; }
+.blog-card-excerpt { font-size: 0.95rem; line-height: 1.6; }
+.blog-card-meta { margin-top: 1rem; font-size: 0.85rem; font-weight: 500; }
+.blog-post { padding: 60px 0 100px 0; position: relative; z-index: 1; }
+.blog-post-header { max-width: 800px; margin: 0 auto 3rem auto; text-align: center; }
+.post-category { font-size: 1rem; font-weight: 700; color: var(--primary-color); text-transform: uppercase; letter-spacing: 1px; }
+.post-title { font-size: 3rem; margin: 1rem 0; }
+.post-meta { font-weight: 500; }
+.post-meta span { margin: 0 0.5rem; }
+.post-featured-image { margin: 0 0 4rem 0; }
+.post-featured-image img { width: 100%; border-radius: 16px; box-shadow: var(--shadow); }
+.post-content { max-width: 800px; margin: 0 auto; font-size: 1.15rem; line-height: 1.8; }
+.post-content p, .post-content ul, .post-content h2, .post-content h3, .post-content blockquote { margin-bottom: 1.5rem; }
+.post-content h2 { font-size: 2rem; margin-top: 3rem; }
+.post-content h3 { font-size: 1.5rem; margin-top: 2.5rem; }
+.post-content a { font-weight: 600; }
+.post-content a:hover { text-decoration: underline; }
+.post-content ul { list-style-position: inside; }
+.post-content blockquote { font-style: italic; font-size: 1.25rem; color: var(--text-dark); padding-left: 1.5rem; border-left: 4px solid var(--primary-color); }
+
+/* --- Payment Page --- */
+#payment-page { padding: 100px 0; }
+.payment-form-container { max-width: 700px; margin: 0 auto; background: var(--bg-white); padding: 2rem 3rem 3rem 3rem; border-radius: 16px; box-shadow: var(--shadow); }
+.payment-form-container .subtitle { margin-bottom: 3rem; }
+.form-step-heading { font-size: 1.1rem; font-weight: 600; margin: 2.5rem 0 1.5rem 0; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-color); }
+.form-row { display: grid; grid-template-columns: 3fr 2fr; gap: 2rem; align-items: center; }
+.form-row .form-group { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.form-row .form-group label { margin-bottom: 0; white-space: nowrap; }
+#secure-payment-form select { background-color: var(--bg-white); border: 1px solid var(--border-color); padding: 0.75rem 1rem; border-radius: 8px; font-size: 1rem; width: auto; min-width: 100px; }
+#secure-payment-form select:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2); }
+.payment-method-selector { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+.payment-option input[type="radio"] { display: none; }
+.payment-option label { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; border: 2px solid var(--border-color); border-radius: 12px; cursor: pointer; transition: all 0.2s ease-in-out; }
+.payment-option-title { font-weight: 600; }
+.recommended-badge { font-size: 0.75rem; font-weight: 700; background: rgba(13, 110, 253, 0.1); color: var(--primary-color); padding: 0.2rem 0.6rem; border-radius: 50px; margin-left: 0.5rem; }
+.payment-option-icons { font-size: 1.8rem; color: #a0aec0; display: flex; gap: 0.75rem; }
+.payment-option input[type="radio"]:checked + label { border-color: var(--primary-color); background-color: var(--bg-light); box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2); }
+.legal-agreement { margin-top: 2.5rem; text-align: center; }
+.legal-agreement label a { font-weight: 600; text-decoration: none; }
+.legal-agreement label a:hover { text-decoration: underline; }
+.details-grid .form-group {
+    display: grid;
+    /* Create two columns: one for the label, one for the input */
+    grid-template-columns: 150px 1fr; 
+    align-items: center;
+    gap: 1rem;
+}
+.details-grid .form-group label {
+    margin-bottom: 0;
+    text-align: right; /* Aligns the label text neatly to the right */
+}
+/* Make the input fields take up the full width of their column */
+#secure-payment-form .details-grid input {
+    width: 100%;
+}
+
+
+/*
+==========================================================================
+   COMPONENT: ENHANCED FOOTER (Consolidated)
+==========================================================================
+*/
+
 footer {
     background: var(--bg-white);
     border-top: 1px solid var(--border-color);
@@ -709,7 +493,7 @@ footer {
 
 .footer-grid {
     display: grid;
-    /* This creates a responsive grid that wraps automatically */
+    /* This creates responsive columns that wrap automatically on smaller screens */
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 2.5rem;
 }
@@ -727,6 +511,16 @@ footer {
     color: var(--text-muted);
     line-height: 1.6;
     margin-bottom: 1.5rem;
+}
+
+.footer-column .social-links a {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    margin-right: 1.5rem; /* Space out the icons */
+    transition: color 0.3s ease;
+}
+.footer-column .social-links a:last-child {
+    margin-right: 0;
 }
 
 .footer-column h4 {
@@ -748,1229 +542,191 @@ footer {
     margin-bottom: 0.75rem;
 }
 
+/* This targets all links within a footer column, including list items */
 .footer-column a {
     color: var(--text-muted);
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
+/* A single hover rule for all links in the footer */
 .footer-column a:hover {
     color: var(--primary-color);
 }
 
-/* Ensure social links in the footer are styled correctly */
-.footer-column .social-links a {
-    color: var(--text-muted);
-    font-size: 1.2rem;
-    margin-right: 1.5rem;
-}
-
-.footer-column .social-links a:hover {
-    color: var(--primary-color);
-}
-.social-links a { color: var(--text-muted); font-size: 1.2rem; margin-left: 1.5rem; transition: color 0.3s ease; }
-.social-links a:hover { color: var(--primary-color); }
 /*
 ======================================================
-  NEW PAGE STYLES
+  DEFINITIVE MOBILE NAVIGATION STYLES (FINAL FIX)
 ======================================================
 */
 
-/* --- Generic Page Header --- */
-.page-header {
-    text-align: center;
-    padding: 120px 0 60px 0;
-}
-
-/* --- Pricing Page Styles --- */
-#pricing-page {
-    background: var(--bg-light);
-    padding-bottom: 100px;
-}
-
-.pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
-    align-items: center;
-}
-
-.pricing-card {
-    background: var(--bg-white);
-    border-radius: 16px;
-    padding: 2.5rem;
-    border: 2px solid var(--border-color);
-    transition: all 0.3s ease;
-    position: relative;
-    text-align: center;
-}
-
-.pricing-card.highlighted {
-    border-color: var(--primary-color);
-    transform: scale(1.05);
-    box-shadow: 0 10px 40px rgba(13, 110, 253, 0.15);
-}
-
-.badge {
-    position: absolute;
-    top: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--primary-color);
-    color: var(--bg-white);
-    padding: 0.4rem 1rem;
-    border-radius: 50px;
-    font-size: 0.8rem;
-    font-weight: 700;
-}
-
-.plan-name { font-size: 1.5rem; margin-bottom: 1rem; }
-
-.price-tag {
-    margin-bottom: 1rem;
-}
-.currency {
-    font-size: 1.5rem;
-    color: var(--text-muted);
-    vertical-align: top;
-    margin-right: 0.25rem;
-}
-.price-amount {
-    font-size: 3.5rem;
-    font-weight: 700;
-    line-height: 1;
-}
-.price-cycle {
-    font-size: 1rem;
-    color: var(--text-muted);
-}
-.plan-description {
-    font-size: 0.9rem;
-    margin-bottom: 2rem;
-    min-height: 50px; /* Aligns buttons */
-}
-
-.features-list {
-    list-style: none;
-    text-align: left;
-    margin-bottom: 2.5rem;
-}
-.features-list li {
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-.features-list i {
-    color: var(--success-color);
-    font-size: 1.2rem;
-}
-
-.pricing-card .cta-button.secondary {
-    background: var(--bg-white);
-    color: var(--primary-color);
-    border: 2px solid var(--primary-color);
-}
-.pricing-card .cta-button.secondary:hover {
-    background: var(--primary-color);
-    color: var(--bg-white);
-}
-
-/* --- Services Detail Page Styles --- */
-#services-page {
-    background: var(--bg-white);
-    padding-bottom: 100px;
-}
-.service-detail-block {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-    padding: 60px 0;
-    border-bottom: 1px solid var(--border-color);
-}
-.service-detail-block:last-child {
-    border-bottom: none;
-}
-/* Alternating layout */
-.service-detail-block:nth-child(even) .service-image {
-    order: 2;
-}
-
-.service-image img {
-    width: 100%;
-    border-radius: 16px;
-    box-shadow: var(--shadow);
-}
-
-.service-content h3 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-}
-.service-content p {
-    margin-bottom: 1.5rem;
-}
-.service-content ul {
-    list-style: none;
-    padding-left: 0;
-    margin-bottom: 2rem;
-}
-.service-content li {
-    margin-bottom: 0.75rem;
-    padding-left: 1.5rem;
-    position: relative;
-}
-.service-content li::before {
-    content: '✓';
-    position: absolute;
-    left: 0;
-    color: var(--primary-color);
-    font-weight: 700;
-}
-.service-content .cta-button {
-    display: inline-block; /* Fixes button width */
-}
-/*
-======================================================
-  NEW TESTIMONIALS & STATS STYLES
-======================================================
-*/
-
-/* --- A reusable class for light background sections --- */
-.bg-light-section {
-    background-color: var(--bg-light);
-}
-
-/* --- Testimonials Section --- */
-#testimonials {
-    background: var(--bg-white);
-    padding: 100px 0;
-}
-
-.testimonial-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2.5rem;
-    margin-top: 4rem;
-}
-
-.testimonial-card {
-    background: var(--bg-light);
-    border: 1px solid var(--border-color);
-    padding: 2.5rem;
-    border-radius: 16px;
-    position: relative;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-}
-
-.quote-icon {
-    position: absolute;
-    top: 1.5rem;
-    left: 1.5rem;
-    font-size: 3rem;
-    color: var(--primary-color);
-    opacity: 0.1;
-}
-
-.testimonial-card blockquote {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    margin-bottom: 2rem;
-    position: relative; /* To stay above the icon */
-    z-index: 2;
-}
-
-.author-info {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.author-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 2px solid var(--border-color);
-}
-
-.author-name {
-    font-weight: 600;
-    color: var(--text-dark);
-    font-style: normal;
-}
-
-.author-location {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-}
-
-
-/* --- Stats Section --- */
-#stats {
-    padding: 80px 0;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-}
-
-.stat-item {
-    text-align: center;
-}
-
-.stat-item i {
-    font-size: 2.5rem;
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-}
-
-.stat-number-text {
-    display: block;
-    font-size: 3rem;
-    font-weight: 700;
-    color: var(--text-dark);
-    line-height: 1.1;
-}
-
-.stat-label {
-    font-size: 1rem;
-    color: var(--text-muted);
-}
-/*
-======================================================
-  NEW NAVIGATION DROPDOWN & SERVICE PAGE STYLES
-======================================================
-*/
-/*
-======================================================
-  DEFINITIVE & STABLE NAVIGATION DROPDOWN (FINAL FIX)
-======================================================
-*/
-
-/* The main container for the dropdown item (e.g., the <li>) */
-.dropdown {
-    position: relative;
-}
-
-/* The "Services" link itself */
-.dropdown-toggle {
-    /* Adding padding here creates a larger hover target on the link itself */
-    padding: 1.5rem 0; 
-}
-
-.dropdown-toggle i {
-    font-size: 0.7rem;
-    margin-left: 0.25rem;
-    transition: transform 0.3s ease;
-}
-
-/* The box that appears on hover */
-.dropdown-content {
-    /* Use visibility/opacity for smooth, accessible animations */
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none; /* Can't be clicked when hidden */
-
-    position: absolute;
-    top: 90%; /* KEY FIX: Position it slightly overlapping the parent's padding area */
-    left: 50%;
-    transform: translateX(-50%) translateY(10px); /* Start slightly lower for animation */
-
-    background-color: var(--bg-white);
-    min-width: 240px;
-    box-shadow: var(--shadow);
-    z-index: 100;
-    border-radius: 8px;
-    padding: 0.5rem 0;
+@media (max-width: 992px) {
     
-    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
-}
-
-/* This is the most important rule */
-/* When you hover the ENTIRE dropdown container... */
-.dropdown:hover .dropdown-content {
-    /* ...make the dropdown box visible and interactive. */
-    visibility: visible;
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateX(-50%) translateY(0); /* Animate it upwards */
-}
-
-/* Rotate the arrow icon on hover */
-.dropdown:hover .dropdown-toggle i {
-    transform: rotate(180deg);
-}
-
-/* Styling for the links inside the dropdown */
-.dropdown-content a {
-    color: var(--text-dark);
-    padding: 0.75rem 1.5rem;
-    text-decoration: none;
-    display: block;
-    font-weight: 500;
-}
-
-.dropdown-content a:hover {
-    background-color: var(--bg-light);
-    color: var(--primary-color);
-}
-/* --- Service Page Hero --- */
-.service-hero {
-    padding: 120px 0;
-    text-align: center;
-    background-size: cover;
-    background-position: center;
-    color: var(--text-dark);
-}
-
-.service-hero h1 {
-    font-size: 3.5rem;
-}
-.service-hero .subtitle {
-    font-size: 1.25rem;
-    max-width: 700px;
-}
-
-/* --- Service Page Content & Integrated Pricing --- */
-.service-page-content {
-    background: var(--bg-white);
-}
-
-#service-pricing {
-    padding: 100px 0;
-}
-#service-pricing .pricing-card .plan-description {
-    display: none; /* Hide descriptions on this version to save space */
-}
-
-/*
-======================================================
-  LOSS RECOVERY PAGE STYLES
-======================================================
-*/
-
-/* --- Section 1: Quote Block (Enhanced UI) --- */
-#recovery-quote {
-    padding: 100px 0;
-}
-.quote-block {
-    max-width: 800px;
-    margin: 0 auto;
-    position: relative;
-    padding: 2rem 2rem 2rem 3rem;
-    border-left: 5px solid var(--primary-color);
-}
-/* The large, subtle quote icon in the background */
-.quote-block::before {
-    content: '\f10d'; /* Font Awesome quote-left icon */
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    position: absolute;
-    top: 0;
-    left: 1rem;
-    font-size: 5rem;
-    color: var(--primary-color);
-    opacity: 0.08;
-    z-index: 1;
-}
-.quote-block p {
-    position: relative;
-    z-index: 2; /* Ensures text is on top of the icon */
-    font-size: 1.25rem;
-    line-height: 1.8;
-    color: var(--text-dark);
-    font-weight: 500;
-    margin-bottom: 2rem;
-}
-.quote-block .quote-saying {
-    font-style: italic;
-    color: var(--text-muted);
-}
-.quote-block p:last-child {
-    font-weight: 600;
-    margin-bottom: 0;
-}
-
-/* --- Section 2: Dark Program Description --- */
-#recovery-program {
-    background-color: var(--bg-light-dark);
-    color: var(--text-light);
-    padding: 80px 0;
-    text-align: center;
-}
-#recovery-program p {
-    color: var(--text-muted);
-    font-size: 1.1rem;
-    max-width: 900px;
-    margin: 2rem auto;
-}
-.separator-line {
-    width: 100px;
-    height: 2px;
-    background-color: var(--primary-color);
-    border: none;
-    margin: 0 auto;
-}
-
-/* --- Section 3: Key Details List --- */
-#recovery-details {
-    padding: 100px 0;
-    text-align: center;
-}
-#recovery-details h3 {
-    font-size: 1.5rem;
-    margin-bottom: 3rem;
-    color: var(--text-dark);
-}
-.details-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: left;
-}
-.detail-item {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-.detail-number {
-    flex-shrink: 0;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    border-radius: 50%;
-    background-color: var(--primary-color);
-    color: var(--bg-white);
-    font-weight: 700;
-}
-.detail-item p {
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: var(--text-dark);
-}
-
-
-/* --- Section 4: Custom Form --- */
-#recovery-form {
-    padding: 100px 0;
-}
-.form-container-card {
-    max-width: 650px;
-    margin: 0 auto;
-    background: var(--bg-white);
-    padding: 3rem;
-    border-radius: 16px;
-    box-shadow: var(--shadow);
-    text-align: center;
-}
-.recovery-specific-form {
-    margin-top: 2rem;
-}
-/* Input with dollar sign */
-.input-with-icon {
-    position: relative;
-    margin-bottom: 1.5rem;
-}
-.input-with-icon i {
-    position: absolute;
-    left: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-muted);
-}
-.input-with-icon input {
-    padding-left: 2.5rem;
-}
-/* Custom Checkbox */
-.checkbox-group {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    margin-bottom: 2rem;
-}
-.checkbox-group input[type="checkbox"] {
-    display: none; /* Hide default checkbox */
-}
-.checkbox-group label {
-    cursor: pointer;
-    position: relative;
-    padding-left: 30px;
-    font-weight: 500;
-    color: var(--text-dark);
-}
-.checkbox-group label::before { /* The box */
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--border-color);
-    border-radius: 4px;
-    background: var(--bg-light);
-    transition: all 0.2s ease;
-}
-.checkbox-group input[type="checkbox"]:checked + label::before { /* Checked box style */
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-}
-.checkbox-group label::after { /* The checkmark */
-    content: '✓';
-    position: absolute;
-    left: 4px;
-    top: 50%;
-    transform: translateY(-50%) scale(0);
-    color: var(--bg-white);
-    font-weight: 700;
-    transition: transform 0.2s ease;
-}
-.checkbox-group input[type="checkbox"]:checked + label::after { /* Show checkmark */
-    transform: translateY(-50%) scale(1);
-}
-
-/* --- Responsive fix for dropdown on mobile --- */
-@media (max-width: 992px) {
-    .dropdown { position: static; }
-    .dropdown-content {
-        position: static;
-        display: block;
-        opacity: 1;
-        transform: none;
-        box-shadow: none;
-        padding: 0.5rem 0 0 1.5rem;
+    /* --- Hamburger Button --- */
+    .mobile-nav-toggle {
+        display: block; /* Show the hamburger button */
+        position: fixed; /* Keep it fixed even if header scrolls slightly */
+        z-index: 9999; /* Highest z-index to be on top of everything */
+        top: 1.5rem;
+        right: 1.5rem;
+        width: 2.2rem;
+        aspect-ratio: 1;
+        background: transparent;
+        border: 0;
+        padding: 0;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(33, 37, 41, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: center;
+        cursor: pointer;
     }
-    .dropdown-toggle i { display: none; }
-}
 
-.legal-page-content {
-    background: var(--bg-white);
-    padding: 100px 0;
-}
-
-.legal-text-container {
-    max-width: 850px; /* Optimal width for reading long text */
-}
-
-.legal-text-container h1 {
-    font-size: 2.8rem;
-    text-align: center;
-    margin-bottom: 3rem;
-}
-
-.legal-text-container h2 {
-    font-size: 1.8rem;
-    text-align: left; /* Keep subheadings left-aligned */
-    margin-top: 2.5rem;
-    margin-bottom: 1.5rem;
-    border-bottom: 2px solid var(--border-color);
-    padding-bottom: 0.5rem;
-}
-
-.legal-text-container p,
-.legal-text-container li {
-    font-size: 1.05rem;
-    line-height: 1.8;
-    color: var(--text-muted);
-}
-
-.legal-text-container p {
-    margin-bottom: 1.5rem;
-}
-
-.legal-text-container ol,
-.legal-text-container ul {
-    padding-left: 2rem; /* Indent the lists */
-    margin-bottom: 1.5rem;
-}
-
-.legal-text-container li {
-    margin-bottom: 1rem;
-}
-/*
-======================================================
-  PAYMENT PAGE STYLES
-======================================================
-*/
-#payment-page {
-    padding: 100px 0;
-    background-color: var(--bg-light);
-}
-
-.payment-form-container {
-    max-width: 700px;
-    margin: 0 auto;
-    background: var(--bg-white);
-    padding: 2rem 3rem 3rem 3rem;
-    border-radius: 16px;
-    box-shadow: var(--shadow);
-}
-
-.payment-form-container .section-title {
-    margin-bottom: 0.5rem;
-}
-.payment-form-container .subtitle {
-    margin-bottom: 3rem;
-}
-
-.form-step-heading {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin: 2.5rem 0 1.5rem 0;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.form-row {
-    display: grid;
-    /* Adjust grid to better match the visual weight */
-    grid-template-columns: 3fr 2fr; 
-    gap: 2rem;
-    align-items: center; /* Vertically align the entire groups */
-}
-
-/* This is the KEY FIX for alignment */
-.form-row .form-group {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Pushes label and select apart */
-    gap: 1rem;
-}
-
-.form-row .form-group label {
-    margin-bottom: 0; /* Remove default margin */
-    white-space: nowrap; /* Prevent label text from wrapping */
-}
-
-/* Give all selects a consistent base style */
-#secure-payment-form select {
-    background-color: var(--bg-white);
-    border: 1px solid var(--border-color);
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    font-size: 1rem;
-    width: auto; /* Allow select to size to its content */
-    min-width: 100px;
-}
-#secure-payment-form select:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2);
-}
-
-/* --- Payment Method Toggle --- */
-.payment-method-selector {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-}
-.payment-option input[type="radio"] {
-    display: none; /* Hide the ugly default radio button */
-}
-.payment-option label {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.25rem 1.5rem;
-    border: 2px solid var(--border-color);
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-}
-.payment-option-title {
-    font-weight: 600;
-    color: var(--text-dark);
-}
-.recommended-badge {
-    font-size: 0.75rem;
-    font-weight: 700;
-    background: rgba(13, 110, 253, 0.1);
-    color: var(--primary-color);
-    padding: 0.2rem 0.6rem;
-    border-radius: 50px;
-    margin-left: 0.5rem;
-}
-.payment-option-icons {
-    font-size: 1.8rem;
-    color: #a0aec0;
-    display: flex;
-    gap: 0.75rem;
-}
-
-/* The style for the SELECTED option */
-.payment-option input[type="radio"]:checked + label {
-    border-color: var(--primary-color);
-    background-color: var(--bg-light);
-    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2);
-}
-
-/* --- Legal Agreement Checkbox --- */
-.legal-agreement {
-    margin-top: 2.5rem;
-    text-align: center;
-}
-.legal-agreement label a {
-    color: var(--primary-color);
-    font-weight: 600;
-    text-decoration: none;
-}
-.legal-agreement label a:hover {
-    text-decoration: underline;
-}
-
-/* Responsive adjustment for the form */
-@media (max-width: 576px) {
-    .form-row {
-        grid-template-columns: 1fr;
+    .mobile-nav-toggle[aria-expanded="true"] {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(33, 37, 41, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M6 6l18 18M24 6L6 24'/%3e%3c/svg%3e");
     }
-    .payment-form-container {
-        padding: 1.5rem;
-    }
-}
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: var(--text-dark);
-}
-
-/* This targets ALL standard inputs and selects */
-.form-group input[type="text"],
-.form-group input[type="email"],
-.form-group input[type="tel"],
-.form-group input[type="number"],
-.form-group select,
-.form-group textarea {
-    width: 100%;
-    padding: 0.9rem 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-size: 1rem;
-    font-family: var(--font-family);
-    background-color: var(--bg-light);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2);
-}
-
-/*
-======================================================
-  ABOUT US PAGE STYLES
-======================================================
-*/
-
-/* --- Section 1: Intro/Philosophy --- */
-#about-intro {
-    padding: 120px 0;
-}
-.about-text-block {
-    max-width: 850px;
-    margin: 0 auto;
-    text-align: center;
-}
-.about-text-block h1 {
-    margin-bottom: 2rem;
-}
-.about-text-block p {
-    font-size: 1.15rem;
-    line-height: 1.8;
-    color: var(--text-muted);
-}
-.about-text-block p strong {
-    color: var(--text-dark);
-}
-
-/* --- Section 2: Mission --- */
-#about-mission {
-    background-color: var(--bg-light-dark);
-    color: var(--text-light);
-    padding: 80px 0;
-    text-align: center;
-}
-#about-mission h2 {
-    font-size: 2rem;
-    max-width: 700px;
-    margin: 2rem auto;
-    line-height: 1.5;
-}
-#about-mission p {
-    color: var(--text-muted);
-    font-size: 1.1rem;
-    max-width: 900px;
-    margin: 2rem auto;
-}
-
-/* --- Section 3: Why Choose Us --- */
-#why-choose-us {
-    padding: 100px 0;
-}
-/* Reusing the .details-list class for consistency */
-.why-us-list {
-    max-width: 900px;
-}
-
-/* --- Section 4: Final CTA --- */
-#about-cta {
-    background: var(--primary-color);
-    padding: 80px 0;
-    text-align: center;
-}
-#about-cta h2, #about-cta p {
-    color: #fff;
-}
-#about-cta p {
-    color: rgba(255, 255, 255, 0.9);
-    margin: 1rem auto 2rem auto;
-    max-width: 600px;
-}
-#about-cta .cta-button {
-    background: #fff;
-    color: var(--primary-color);
-}
-#about-cta .cta-button:hover {
-    background: var(--bg-dark);
-    color: #fff;
-}
 
 
-/* --- Final Responsive Tweak for the new Nav Button --- */
-@media (max-width: 992px) {
-    .nav-pay-btn {
-        width: 100%;
-        text-align: center;
-        padding: 0.75rem 1.5rem;
-    }
-}
-
-/*
-======================================================
-  FREE TRIAL PAGE STYLES
-======================================================
-*/
-
-/* Give the free trial link in the dropdown a special color */
-.trial-link {
-    color: var(--primary-color) !important;
-    font-weight: 700 !important;
-}
-
-/* --- Section 1: Hero/Quote --- */
-#trial-hero {
-    padding: 100px 0;
-    text-align: center;
-}
-#trial-hero .quote-block {
-    max-width: 750px;
-    border: none;
-    padding: 0;
-}
-#trial-hero .quote-block::before {
-    display: none; /* Hide the big quote icon for this style */
-}
-#trial-hero h1 {
-    font-size: 3rem;
-    margin-bottom: 1.5rem;
-}
-#trial-hero p {
-    font-size: 1.2rem;
-    color: var(--text-muted);
-}
-
-/* --- Section 2: Trial Details --- */
-#trial-details {
-    padding: 100px 0;
-    background-color: var(--bg-white);
-}
-.trial-offering-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    max-width: 800px;
-    margin: 3rem auto 0 auto;
-}
-.trial-offering-card {
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 2.5rem;
-    text-align: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.trial-offering-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow);
-}
-.trial-offering-card i {
-    font-size: 2.5rem;
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
-}
-.trial-offering-card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-}
-.trial-offering-card .signal-count {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--text-muted);
-}
-
-/* --- Section 3: Benefits (SEO) --- */
-#trial-benefits {
-    padding: 100px 0;
-}
-.benefits-content {
-    max-width: 800px;
-    margin: 0 auto;
-}
-.benefits-content h3 {
-    font-size: 2rem;
-    text-align: center;
-    margin-bottom: 2rem;
-}
-.benefits-content p {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: var(--text-muted);
-    margin-bottom: 1.5rem;
-}
-.benefits-content strong {
-    color: var(--text-dark);
-}
-
-/* --- Section 4: Final CTA --- */
-#trial-cta {
-    background: var(--primary-color);
-    padding: 80px 0;
-    text-align: center;
-}
-#trial-cta h2, #trial-cta p {
-    color: #fff;
-}
-#trial-cta p {
-    color: rgba(255, 255, 255, 0.9);
-    margin: 1rem auto 2rem auto;
-    max-width: 600px;
-}
-#trial-cta .cta-button {
-    background: #fff;
-    color: var(--primary-color);
-}
-#trial-cta .cta-button:hover {
-    background: var(--bg-dark);
-    color: #fff;
-}
-
-#blog-grid-section {
-    padding-bottom: 100px;
-}
-.blog-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2.5rem;
-}
-.blog-card {
-    display: flex;
-    flex-direction: column;
-    background: var(--bg-white);
-    border-radius: 12px;
-    box-shadow: var(--shadow);
-    overflow: hidden;
-    text-decoration: none;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.blog-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-}
-.blog-card-image {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-}
-.blog-card-content {
-    padding: 1.5rem;
-}
-.blog-card-category {
-    display: inline-block;
-    background-color: rgba(13, 110, 253, 0.1);
-    color: var(--primary-color);
-    padding: 0.25rem 0.75rem;
-    border-radius: 50px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-}
-.blog-card-title {
-    font-size: 1.25rem;
-    color: var(--text-dark);
-    margin-bottom: 0.75rem;
-}
-.blog-card-excerpt {
-    font-size: 0.95rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-}
-.blog-card-meta {
-    margin-top: 1rem;
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    font-weight: 500;
-}
-
-
-/* --- Single Blog Post Page --- */
-.blog-post {
-    padding: 60px 0 100px 0;
-    
-}
-.blog-post-header {
-    max-width: 800px;
-    margin: 0 auto 3rem auto;
-    text-align: center;
-}
-.post-category {
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--primary-color);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-.post-title {
-    font-size: 3rem;
-    margin: 1rem 0;
-}
-.post-meta {
-    color: var(--text-muted);
-    font-weight: 500;
-}
-.post-meta span { margin: 0 0.5rem; }
-.post-featured-image {
-    margin: 0 0 4rem 0;
-}
-.post-featured-image img {
-    width: 100%;
-    border-radius: 16px;
-    box-shadow: var(--shadow);
-}
-.post-content {
-    max-width: 800px;
-    margin: 0 auto;
-    font-size: 1.15rem;
-    line-height: 1.8;
-}
-.post-content p, .post-content ul, .post-content h2, .post-content h3, .post-content blockquote {
-    margin-bottom: 1.5rem;
-}
-.post-content h2 { font-size: 2rem; margin-top: 3rem; }
-.post-content h3 { font-size: 1.5rem; margin-top: 2.5rem; }
-.post-content a { color: var(--primary-color); text-decoration: none; font-weight: 600; }
-.post-content a:hover { text-decoration: underline; }
-.post-content ul { list-style-position: inside; }
-.post-content blockquote {
-    font-style: italic;
-    font-size: 1.25rem;
-    color: var(--text-dark);
-    padding-left: 1.5rem;
-    border-left: 4px solid var(--primary-color);
-}
-
-
-/*
-======================================================
-  COMPREHENSIVE RESPONSIVE STYLES
-======================================================
-*/
-
-/* --- Mobile Navigation (Hamburger Menu) --- */
-/* --- New Style for Country Flags in Dropdown --- */
-.choices__item--choice .flag-icon {
-    display: inline-block;
-    width: 20px;
-    margin-right: 10px;
-    vertical-align: middle;
-}
-.choices__item--choice span {
-    vertical-align: middle;
-}
-.mobile-nav-toggle {
-    display: none; /* Hidden on desktop */
-    position: absolute;
-    z-index: 2000;
-    top: 2rem;
-    right: 1.5rem;
-    width: 2rem;
-    aspect-ratio: 1;
-    background: transparent;
-    border: 0;
-    padding: 0;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(33, 37, 41, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: center;
-    cursor: pointer;
-}
-
-.mobile-nav-toggle[aria-expanded="true"] {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(33, 37, 41, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M6 6l18 18M24 6L6 24'/%3e%3c/svg%3e");
-}
-
-/* For screen-reader accessibility */
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
-}
-
-
-/* ======================================== */
-/*  Breakpoint 1: Laptops & Tablets (< 992px) */
-/* ======================================== */
-@media (max-width: 992px) {
-    /* --- General Layout & Typography --- */
-    h1 { font-size: 2.8rem; }
-    h2 { font-size: 2.2rem; }
-    section, .page-header { padding-top: 80px; padding-bottom: 80px; }
-
-    /* --- Navigation becomes mobile menu --- */
-    .mobile-nav-toggle { display: block; }
+    /* --- The Slide-Out Menu Panel --- */
     .nav-links {
         position: fixed;
-        inset: 0 0 0 30%; /* Slide in from the right */
+        /* Slide in from the right, covering 70% of the screen */
+        inset: 0 0 0 30%;
+        
+        /* Layout and Background */
+        display: flex;
         flex-direction: column;
-        padding: min(20vh, 10rem) 2rem;
-        gap: 2rem;
+        padding: min(25vh, 8rem) 2rem;
+        gap: 1.5rem;
         background: var(--bg-white);
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+
+        /* Animation and Visibility */
         transform: translateX(100%);
         transition: transform 350ms ease-out;
+        z-index: 9998; /* Just below the close button */
     }
+
+    /* The state when the menu is open */
     .nav-links[data-visible="true"] {
         transform: translateX(0%);
     }
 
-    /* --- Hero Section Stacks --- */
+
+ /* Inside @media (max-width: 992px) */
+
+/* --- The Slide-Out Menu Panel (DEFINITIVE FIX) --- */
+.nav-links {
+    position: fixed;
+    inset: 0 0 0 30%; /* Slide in from right */
+    
+    /* THE KEY FIX: Explicitly set Flexbox properties */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align all items to the left */
+    justify-content: flex-start; /* Start content from the top */
+    
+    padding: min(20vh, 8rem) 2.5rem; /* Use generous padding */
+    gap: 1.5rem; /* Vertical space between items */
+    
+    background: var(--bg-white);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+    transform: translateX(100%);
+    transition: transform 350ms ease-out;
+    z-index: 9998;
+}
+/* The state when the menu is open */
+.nav-links[data-visible="true"] {
+    transform: translateX(0%);
+}
+
+/* --- Styling for ITEMS INSIDE the Mobile Menu (Verified) --- */
+
+/* This targets EVERY link inside the open menu */
+.nav-links > li > a {
+    display: block;
+    text-decoration: none;
+    color: var(--text-dark);
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 0.5rem 0;
+}
+
+/* Specifically style the button-like links to be full-width */
+.nav-links .nav-contact-btn,
+.nav-links .nav-pay-btn {
+    width: 100%;
+    text-align: center;
+    padding: 0.85rem 1.5rem;
+    margin-top: 1rem; /* Add some space above the buttons */
+}
+.nav-links[data-visible="true"] {
+    transform: translateX(0%);
+}
+
+/* --- General Link Styling Inside Mobile Menu --- */
+.nav-links a {
+    display: block;
+    text-decoration: none;
+    color: var(--text-dark);
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 0.5rem 0;
+}
+
+/* --- Button Styling Inside Mobile Menu --- */
+.nav-links .nav-contact-btn,
+.nav-links .nav-pay-btn {
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem 1.5rem;
+    margin-top: 0.5rem;
+}
+
+/* --- Dropdown Handling in Mobile (THE DEFINITIVE FIX) --- */
+.dropdown {
+    position: static;
+}
+.dropdown-toggle i {
+    /* Style the arrow icon */
+    display: inline-block;
+    font-size: 1rem;
+    vertical-align: middle;
+    transition: transform 0.3s ease;
+}
+.dropdown-content {
+    /* This is the default HIDDEN state */
+    display: block; /* Important for animation */
+    visibility: visible;
+    overflow: hidden;
+    max-height: 0; /* The key to hiding the content */
+    opacity: 0;
+    
+    /* Reset all desktop positioning */
+    position: static;
+    transform: none;
+    box-shadow: none;
+    min-width: unset;
+    
+    /* Style the sub-menu layout */
+    padding: 0 0 0 1.5rem; /* Indented padding, but none top/bottom */
+    border-left: 2px solid var(--border-color);
+    margin-left: 0.5rem;
+    margin-top: 0.5rem;
+
+    transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+}
+
+/* This is the OPEN state, triggered by JavaScript */
+.dropdown.is-open .dropdown-content {
+    max-height: 300px; /* A large enough value to show all links */
+    opacity: 1;
+    padding-top: 0.5rem; /* Add padding back when open */
+    padding-bottom: 0.5rem;
+}
+
+/* Rotate the arrow when open */
+.dropdown.is-open .dropdown-toggle i {
+    transform: rotate(180deg);
+}
     .hero-content {
         grid-template-columns: 1fr;
         text-align: center;
@@ -2007,50 +763,47 @@ footer {
 }
 
 
-
 /* ======================================== */
-/*  Breakpoint 3: Mobile Phones (< 480px)   */
+/*  Breakpoint 2: Smaller Tablets (< 768px) */
 /* ======================================== */
-@media (max-width: 480px) {
-    .page-header { padding-top: 100px; padding-bottom: 40px; }
+@media (max-width: 768px) {
+    /* --- General Layout & Typography --- */
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2.0rem; }
+    .container { padding: 0 1.5rem; }
+    section, .page-header { padding-top: 60px; padding-bottom: 60px; }
 
-    /* --- Mobile Menu full width --- */
-    .nav-links {
-        inset: 0 0 0 0;
-    }
-
-    /* --- Hero Section smaller text --- */
-    .hero-text p { font-size: 1rem; }
-    .hero-trust-badge {
+    /* --- Hero Section Adjustments --- */
+    .hero-cta-group {
         flex-direction: column;
-        gap: 1.5rem;
+        gap: 1rem;
+        align-items: center;
+    }
+    .cta-button { width: 100%; max-width: 350px; text-align: center; }
+
+    /* --- Pricing Card Adjustments --- */
+    .pricing-card.highlighted {
+        transform: scale(1); /* Remove scaling on mobile to save space */
+    }
+    .pricing-grid {
+        grid-template-columns: 1fr;
+        max-width: 450px;
+        margin: 0 auto;
     }
 
-    /* --- Tighter spacing on cards --- */
-    .feature-card, .service-card { padding: 2rem 1.5rem; }
-    .service-card {
-        padding-top: 60px;
-    }
+    /* --- Table becomes scrollable --- */
+    
+    th:first-child, td:first-child { padding-left: 1.5rem; }
+    th:last-child, td:last-child { padding-right: 1.5rem; }
 
-    /* --- Contact Form Buttons --- */
-    .form-submit-btn {
-        width: 100%;
-        padding: 1rem;
-    }
 
-       /* NEW RULES FOR PHONES */
-    .stats-grid {
-        gap: 2.5rem; /* Adjust gap for 2x2 layout on phone */
+    /* --- Footer Stacks --- */
+    footer .container {
+        flex-direction: column;
+        gap: 1rem;
     }
-    .stat-number {
-        font-size: 2.5rem; /* Slightly smaller number font on small screens */
-    }
-
-       /* NEW RULES FOR PAYMENT LOGOS ON PHONES */
-    .payment-logos {
-        gap: 2rem; /* Reduce the space between logos */
-    }
-    .payment-logos i {
-        font-size: 2.5rem; /* Make logos slightly smaller */
+    .testimonial-grid {
+        grid-template-columns: 1fr; /* Stack testimonials */
+        gap: 2rem;
     }
 }
