@@ -1,0 +1,6 @@
+# static/robots.txt
+
+User-agent: *
+Allow: /
+
+Sitemap: https://fxopus.com/sitemap.xml

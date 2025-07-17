@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"encoding/xml"
 	"fmt"
 	"html/template"
 	"log"
@@ -11,10 +12,25 @@ import (
 	"path/filepath"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
 )
+
+// URLSet is the root element of the sitemap file
+type URLSet struct {
+	XMLName xml.Name `xml:"http://www.sitemaps.org/schemas/sitemap/0.9 urlset"`
+	URLs    []URL    `xml:"url"`
+}
+
+// URL represents a single <url> entry in the sitemap
+type URL struct {
+	Loc        string  `xml:"loc"`
+	LastMod    string  `xml:"lastmod"`
+	ChangeFreq string  `xml:"changefreq"`
+	Priority   float64 `xml:"priority"`
+}
 
 // Response structure from the FindIP API
 type FindIPResponse struct {
@@ -119,6 +135,51 @@ func main() {
 	router.POST("/contact-submit", func(c *gin.Context) {
 		log.Println("Form submitted successfully.")
 		c.String(http.StatusOK, "Thank you!")
+	})
+
+	// --- NEW: SITEMAP.XML HANDLER ---
+	router.GET("/sitemap.xml", func(c *gin.Context) {
+		baseURL := "https://fxopus.com"
+
+		// Define all the URLs of your site
+		pages := []URL{
+			{Loc: baseURL + "/", ChangeFreq: "weekly", Priority: 1.0},
+			{Loc: baseURL + "/about", ChangeFreq: "monthly", Priority: 0.8},
+			{Loc: baseURL + "/pricing", ChangeFreq: "monthly", Priority: 0.9},
+			{Loc: baseURL + "/payment", ChangeFreq: "yearly", Priority: 0.5},
+			{Loc: baseURL + "/forex", ChangeFreq: "monthly", Priority: 0.7},
+			{Loc: baseURL + "/commodities", ChangeFreq: "monthly", Priority: 0.7},
+			{Loc: baseURL + "/crypto", ChangeFreq: "monthly", Priority: 0.7},
+			{Loc: baseURL + "/loss-recovery", ChangeFreq: "monthly", Priority: 0.9},
+			{Loc: baseURL + "/free-trial", ChangeFreq: "weekly", Priority: 0.9},
+			{Loc: baseURL + "/blog", ChangeFreq: "weekly", Priority: 0.9},
+			{Loc: baseURL + "/blog-post", ChangeFreq: "daily", Priority: 0.7}, // Example for a recent blog post
+			// As you add more blog posts, you would dynamically add them to this list
+		}
+
+		// Get the current date for the LastMod field
+		lastMod := time.Now().UTC().Format("2006-01-02")
+		for i := range pages {
+			pages[i].LastMod = lastMod
+		}
+
+		// Create the root URLSet element
+		urlSet := URLSet{
+			URLs: pages,
+		}
+
+		// Marshal the Go struct into XML
+		xmlBytes, err := xml.MarshalIndent(urlSet, "", "  ")
+		if err != nil {
+			c.String(http.StatusInternalServerError, "Error generating sitemap")
+			return
+		}
+
+		// Prepend the XML header
+		sitemap := []byte(xml.Header + string(xmlBytes))
+
+		// Serve the sitemap with the correct XML content type
+		c.Data(http.StatusOK, "application/xml", sitemap)
 	})
 
 	// Get PORT from env (for Leapcell or Docker)
