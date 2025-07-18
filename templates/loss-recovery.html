@@ -121,7 +121,10 @@
                         <div class="input-with-icon"><i class="fas fa-dollar-sign"></i><input type="number" placeholder="Current Account Size" name="account-size" required></div>
                         <div class="input-with-icon"><i class="fas fa-dollar-sign"></i><input type="number" placeholder="Past Loss" name="past-loss" required></div>
                         <div class="checkbox-group"><input type="checkbox" id="running-trades" name="running-trades"><label for="running-trades">Running Trades</label></div>
-                        <button type="submit" class="cta-button form-submit-btn">Submit for Review</button>
+                       <button type="submit" class="cta-button form-submit-btn">
+    <span class="button-text">Submit for Review</span>
+    <div class="loader"></div>
+</button>
                     </form>
                 </div>
             </div>
@@ -209,7 +212,7 @@
                         return Choices.defaults.templates.choice.call(this, {...item, label: `<img class="flag-icon" src="https://flagcdn.com/w20/${item.value.toLowerCase()}.png" alt="Flag of ${item.label}"><span>${item.label}</span>`});
                     }
                 });
-                fetch('countries.json')
+                fetch('/static/countries.json')
                     .then(response => response.json())
                     .then(data => choices.setChoices(data, 'value', 'label', false))
                     .catch(error => console.error('Error loading country data:', error));
@@ -231,67 +234,51 @@ s0.parentNode.insertBefore(s1,s0);
 <!--End of Tawk.to Script-->
 
 <!-- ====================================================== -->
-<!--    LOSS RECOVERY FORM SUBMISSION SCRIPT                -->
+<!--    LOSS RECOVERY FORM SUBMISSION SCRIPT (Final Version) -->
 <!-- ====================================================== -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    // Get all the elements we need for THIS page
     const recoveryForm = document.getElementById('loss-recovery-form');
     const successModal = document.getElementById('success-modal');
     const closeModalBtn = document.getElementById('modal-close-btn');
 
-    // Make sure all elements were found before adding listeners
     if (recoveryForm && successModal && closeModalBtn) {
         
-        recoveryForm.addEventListener('submit', function(event) {
-            // Prevent the page from reloading
-            event.preventDefault();
+recoveryForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    // Find the button that was clicked
+    const submitButton = recoveryForm.querySelector('.form-submit-btn');
 
-            // --- DATA EXTRACTION ---
-            const formData = new FormData(recoveryForm);
-            const fullName = formData.get('name');
-            const emailAddress = formData.get('email');
-            const country = formData.get('country');
-            const whatsappNumber = formData.get('whatsapp');
-            const accountSize = formData.get('account-size');
-            const pastLoss = formData.get('past-loss');
-            const hasRunningTrades = document.getElementById('running-trades').checked; // .checked for checkboxes
+    // --- START LOADING STATE ---
+    submitButton.classList.add('loading');
+    submitButton.disabled = true; // Prevents multiple submissions
 
-            // Log the data to the console for you to see
-            console.log("Loss Recovery Form Submitted! Data extracted:", {
-                fullName,
-                emailAddress,
-                country,
-                whatsappNumber,
-                accountSize,
-                pastLoss,
-                hasRunningTrades
-            });
-            
-            // --- This is where you will take care of the rest ---
-            
-            // Show the success modal
+    const formData = new FormData(recoveryForm);
+
+    fetch('/loss-recovery-submit', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
             successModal.classList.remove('hidden');
-
-            // Reset the form
             recoveryForm.reset();
-        });
-
-        // Function to hide the modal
-        const hideModal = () => {
-            successModal.classList.add('hidden');
-        };
-
-        // Add listeners to close the modal
-        closeModalBtn.addEventListener('click', hideModal);
-        successModal.addEventListener('click', (event) => {
-            if (event.target === successModal) {
-                hideModal();
-            }
-        });
-
-    } else {
-        console.error("Could not find one or more required elements for the loss recovery form. Please check your HTML IDs: #loss-recovery-form, #success-modal, or #modal-close-btn.");
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Fetch error:', error);
+        alert('A network error occurred. Please try again.');
+    })
+    .finally(() => {
+        // --- END LOADING STATE (runs whether it succeeded or failed) ---
+        submitButton.classList.remove('loading');
+        submitButton.disabled = false;
+    });
+});
     }
 });
 </script>

@@ -305,7 +305,53 @@ th { color: var(--text-muted); font-weight: 600; text-transform: uppercase; font
 .choices__item--choice .flag-icon { display: inline-block; width: 20px; margin-right: 10px; vertical-align: middle; }
 .choices__item--choice span { vertical-align: middle; }
 .form-submit-btn { width: 100%; padding: 1.1rem 0; border: none; cursor: pointer; }
+/*
+======================================================
+  SUBMIT BUTTON LOADER STYLES
+======================================================
+*/
 
+/* This class will be added to the button when it's loading */
+.form-submit-btn.loading {
+    /* Prevent user from clicking again */
+    pointer-events: none;
+    cursor: wait;
+    
+    /* Make the original text invisible */
+    color: transparent !important; 
+}
+
+/* The loader element itself */
+.loader {
+    /* Position it in the center of the button */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(255, 255, 255, 0.5); /* A faint white circle */
+    border-bottom-color: #ffffff; /* The spinning part */
+    border-radius: 50%;
+    
+    /* Hide it by default */
+    display: none; 
+    
+    /* The spin animation */
+    animation: spin 1s linear infinite;
+}
+
+/* The animation keyframes */
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* When the button has the .loading class, show the loader */
+.form-submit-btn.loading .loader {
+    display: block;
+}
 /* --- About Us Page --- */
 #about-intro { padding: 120px 0; }
 .about-text-block { max-width: 850px; margin: 0 auto; text-align: center; }

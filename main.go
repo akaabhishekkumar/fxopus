@@ -23,6 +23,14 @@ type URLSet struct {
 	XMLName xml.Name `xml:"http://www.sitemaps.org/schemas/sitemap/0.9 urlset"`
 	URLs    []URL    `xml:"url"`
 }
+type EmailConfig struct {
+	SMTPHost string
+	SMTPPort int
+	Username string
+	Password string
+}
+
+var emailConfig EmailConfig
 
 // URL represents a single <url> entry in the sitemap
 type URL struct {
@@ -131,10 +139,67 @@ func main() {
 			"headers":         headers,
 		})
 	})
-	// Example form submission
+	// This route handles the incoming form data from the browser.
 	router.POST("/contact-submit", func(c *gin.Context) {
-		log.Println("Form submitted successfully.")
-		c.String(http.StatusOK, "Thank you!")
+		// Extract all the parameters from the form submission.
+		// These names ("name", "email", etc.) MUST match the `name` attribute in your HTML form inputs.
+		name := c.PostForm("name")
+		email := c.PostForm("email")
+		phone := c.PostForm("phone")
+		country := c.PostForm("country")
+		plan := c.PostForm("plan")
+		bestTime := c.PostForm("calling-hours")
+
+		// Call your sendEmail function with the extracted data.
+		err := sendEmail(email, name, plan, country, bestTime, phone)
+
+		// Check if the sendEmail function returned an error.
+		if err != nil {
+			// If there was an error, log it on the server and send an error response to the browser.
+			log.Println("Error sending email:", err)
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"status":  "error",
+				"message": "Sorry, there was an error sending your message. Please try again later.",
+			})
+			return
+		}
+
+		// If everything was successful, send a success response back to the browser.
+		c.JSON(http.StatusOK, gin.H{
+			"status":  "success",
+			"message": "Your message has been sent successfully!",
+		})
+	})
+	router.POST("/loss-recovery-submit", func(c *gin.Context) {
+		// 1. Extract all the string parameters from the form.
+		name := c.PostForm("name")
+		email := c.PostForm("email")
+		country := c.PostForm("country")
+		whatsapp := c.PostForm("whatsapp")
+		accountSize := c.PostForm("account-size")
+		pastLoss := c.PostForm("past-loss")
+
+		// 2. Handle the checkbox. A checkbox sends "on" if checked, and nothing if not.
+		// We convert this to a true/false boolean.
+		hasRunningTrades := c.PostForm("running-trades") == "on"
+
+		// 3. Call your new sendLossRecoveryEmail function with the data.
+		err := sendLossRecoveryEmail(name, email, country, whatsapp, accountSize, pastLoss, hasRunningTrades)
+
+		// 4. Handle the response, just like the other form.
+		if err != nil {
+			log.Println("Error sending loss recovery email:", err)
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"status":  "error",
+				"message": "Sorry, there was an error submitting your details. Please try again.",
+			})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"status":  "success",
+			"message": "Your details have been submitted successfully!",
+		})
 	})
 
 	// --- NEW: SITEMAP.XML HANDLER ---
@@ -192,6 +257,14 @@ func main() {
 	if err := router.Run(":" + port); err != nil {
 		log.Fatal("Server failed to start:", err)
 	}
+
+	// Initialize email configuration using environment variables
+	emailConfig = EmailConfig{
+		SMTPHost: "smtp.zoho.in", // e.g., smtp.zoho.in
+		SMTPPort: 587,            // Typical port for TLS
+		Username: "contact@fxopus.com",
+		Password: "bEqgys-xojrej-qowqu3",
+	} //
 }
 
 // Function to get country code (with caching)

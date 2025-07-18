@@ -173,19 +173,35 @@
 </footer>
 <!-- Add this just before the </body> tag in ALL THREE HTML files -->
 <script>
+    // --- Your existing Hamburger Menu Script ---
     const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
     const navLinks = document.querySelector('.nav-links');
+    if (mobileNavToggle && navLinks) {
+        mobileNavToggle.addEventListener('click', () => {
+            const isVisible = navLinks.getAttribute('data-visible');
+            if (isVisible === 'false' || !isVisible) {
+                navLinks.setAttribute('data-visible', true);
+                mobileNavToggle.setAttribute('aria-expanded', true);
+            } else {
+                navLinks.setAttribute('data-visible', false);
+                mobileNavToggle.setAttribute('aria-expanded', false);
+            }
+        });
+    }
 
-    mobileNavToggle.addEventListener('click', () => {
-        const isVisible = navLinks.getAttribute('data-visible');
-
-        if (isVisible === 'false' || !isVisible) {
-            navLinks.setAttribute('data-visible', true);
-            mobileNavToggle.setAttribute('aria-expanded', true);
-        } else {
-            navLinks.setAttribute('data-visible', false);
-            mobileNavToggle.setAttribute('aria-expanded', false);
-        }
+    // --- ADD THIS NEW SCRIPT FOR THE SERVICES DROPDOWN ---
+    document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+        toggle.addEventListener('click', function(event) {
+            // Only activate this click behavior on mobile screens
+            if (window.innerWidth <= 992) {
+                // Prevent the link from navigating anywhere
+                event.preventDefault();
+                
+                // Find the parent .dropdown element and toggle the .is-open class
+                const dropdown = this.closest('.dropdown');
+                dropdown.classList.toggle('is-open');
+            }
+        });
     });
 </script>
 <!-- ====================================================== -->

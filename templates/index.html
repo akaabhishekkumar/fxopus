@@ -374,11 +374,11 @@
         <label for="plan">Plan to Discuss</label>
        <select id="plan" name="plan" required>
     <option value="" disabled selected>Please select a plan</option>
-    <option value="trial">Free Trial</option> <!-- ADD THIS NEW OPTION -->
-    <option value="monthly">Monthly Plan</option>
-    <option value="quarterly">Quarterly Plan</option>
-    <option value="yearly">Yearly Plan</option>
-    <option value="general">General Inquiry</option>
+    <option value="Free Trial">Free Trial</option> <!-- ADD THIS NEW OPTION -->
+    <option value="Monthly Plan">Monthly Plan</option>
+    <option value="Quarterly Plan">Quarterly Plan</option>
+    <option value="Yearly Plan">Yearly Plan</option>
+    <option value="General Inquiry">General Inquiry</option>
 </select>
     </div>
     
@@ -387,13 +387,18 @@
         <label for="calling-hours">Best Time To Call</label>
         <select id="calling-hours" name="calling-hours">
             <option value="" disabled selected>Please select a time</option>
-            <option value="morning">9:00 AM - 12:00 PM (GMT)</option>
-            <option value="afternoon">12:00 PM - 3:00 PM (GMT)</option>
-            <option value="evening">3:00 PM - 5:00 PM (GMT)</option>
+            <option value="9:00 AM - 12:00 PM (GMT)">9:00 AM - 12:00 PM (GMT)</option>
+            <option value="12:00 PM - 3:00 PM (GMT)">12:00 PM - 3:00 PM (GMT)</option>
+            <option value="3:00 PM - 5:00 PM (GMT)">3:00 PM - 5:00 PM (GMT)</option>
+            <option value="Anytime">Anytime</option>
+
         </select>
     </div>
 
-    <button type="submit" class="cta-button form-submit-btn">Request Information</button>
+   <button type="submit" class="cta-button form-submit-btn">
+    <span class="button-text">Request Information</span>
+    <div class="loader"></div>
+</button>
 </form>
         </div>
     </div>
@@ -504,7 +509,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // THIS IS THE KEY CHANGE: Fetch from our local file
-    fetch('countries.json')
+    fetch('/static/countries.json')
         .then(response => response.json())
         .then(data => {
             // The data is already sorted and filtered, so we just set it!
@@ -609,64 +614,58 @@ s0.parentNode.insertBefore(s1,s0);
 
 
 <!-- ====================================================== -->
-<!--    FORM SUBMISSION SCRIPT (DEFINITIVE FIX)             -->
+<!--    FORM SUBMISSION SCRIPT (Final Backend-Connected Version) -->
 <!-- ====================================================== -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    // Get all the elements we need to work with
     const contactForm = document.getElementById('contact-form');
     const successModal = document.getElementById('success-modal');
     const closeModalBtn = document.getElementById('modal-close-btn');
 
-    // Make sure all elements were found before adding listeners
     if (contactForm && successModal && closeModalBtn) {
         
-        contactForm.addEventListener('submit', function(event) {
-            // Prevent the page from reloading
-            event.preventDefault();
+      contactForm.addEventListener('submit', function(event) {
+    event.preventDefault();
 
-            // --- DATA EXTRACTION ---
-            const formData = new FormData(contactForm);
-            const fullName = formData.get('name');
-            const emailAddress = formData.get('email');
-            const phoneNumber = formData.get('phone');
-            const whatsappNumber = formData.get('whatsapp');
-            const country = formData.get('country');
-            const planToDiscuss = formData.get('plan');
-            const bestTimeToCall = formData.get('calling-hours');
+    // Find the button that was clicked
+    const submitButton = contactForm.querySelector('.form-submit-btn');
 
-            // Log the data to the console for you to see
-            console.log("Form Submitted! Data extracted:", {
-                fullName, emailAddress, phoneNumber, whatsappNumber, 
-                country, planToDiscuss, bestTimeToCall
-            });
-            
-            // --- This is where you will take care of the rest ---
-            // For example: sendDataToApi({ fullName, ... });
+    // --- START LOADING STATE ---
+    submitButton.classList.add('loading');
+    submitButton.disabled = true; // Prevents multiple submissions
 
-            // Show the success modal
+    const formData = new FormData(contactForm);
+
+    fetch('/contact-submit', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
             successModal.classList.remove('hidden');
-
-            // Reset the form for the next use
             contactForm.reset();
-        });
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Fetch error:', error);
+        alert('A network error occurred. Please try again.');
+    })
+    .finally(() => {
+        // --- END LOADING STATE (runs whether it succeeded or failed) ---
+        submitButton.classList.remove('loading');
+        submitButton.disabled = false;
+    });
+});
 
-        // Function to hide the modal
-        const hideModal = () => {
-            successModal.classList.add('hidden');
-        };
-
-        // Add listeners to close the modal
+        // --- Modal closing logic (no changes needed here) ---
+        const hideModal = () => { successModal.classList.add('hidden'); };
         closeModalBtn.addEventListener('click', hideModal);
         successModal.addEventListener('click', (event) => {
-            // Only close if the dark overlay itself is clicked
-            if (event.target === successModal) {
-                hideModal();
-            }
+            if (event.target === successModal) { hideModal(); }
         });
-    } else {
-        // This will tell you if an element ID is wrong
-        console.error("Could not find one or more required elements: #contact-form, #success-modal, or #modal-close-btn. Please check your HTML IDs.");
     }
 });
 </script>

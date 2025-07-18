@@ -118,9 +118,11 @@
     </footer>
     
     <!-- All necessary scripts for functionality -->
-    <script>
-        const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
-        const navLinks = document.querySelector('.nav-links');
+   <script>
+    // --- Your existing Hamburger Menu Script ---
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    if (mobileNavToggle && navLinks) {
         mobileNavToggle.addEventListener('click', () => {
             const isVisible = navLinks.getAttribute('data-visible');
             if (isVisible === 'false' || !isVisible) {
@@ -131,7 +133,23 @@
                 mobileNavToggle.setAttribute('aria-expanded', false);
             }
         });
-    </script>
+    }
+
+    // --- ADD THIS NEW SCRIPT FOR THE SERVICES DROPDOWN ---
+    document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+        toggle.addEventListener('click', function(event) {
+            // Only activate this click behavior on mobile screens
+            if (window.innerWidth <= 992) {
+                // Prevent the link from navigating anywhere
+                event.preventDefault();
+                
+                // Find the parent .dropdown element and toggle the .is-open class
+                const dropdown = this.closest('.dropdown');
+                dropdown.classList.toggle('is-open');
+            }
+        });
+    });
+</script>
     <!--Start of Tawk.to Script-->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
