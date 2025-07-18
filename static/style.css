@@ -605,7 +605,9 @@ footer {
   DEFINITIVE MOBILE NAVIGATION STYLES (FINAL FIX)
 ======================================================
 */
-
+.mobile-nav-toggle {
+    display: none;
+}
 @media (max-width: 992px) {
     
     /* --- Hamburger Button --- */
